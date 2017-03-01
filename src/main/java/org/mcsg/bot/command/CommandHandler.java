@@ -11,6 +11,7 @@ import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.command.commands.CodeCommand;
 import org.mcsg.bot.command.commands.IsCommand;
+import org.mcsg.bot.command.commands.PingCommand;
 import org.mcsg.bot.command.commands.QueueTestCommand;
 import org.mcsg.bot.command.commands.RandomNumberCommand;
 import org.mcsg.bot.command.commands.ShellCommand;
@@ -27,6 +28,7 @@ public class CommandHandler {
 		registerCommand(new ShellCommand());
 		registerCommand(new VersionCommand());
 		registerCommand(new CodeCommand());
+		registerCommand(new PingCommand());
 	}
 
 	public void executeCommand(String msg, BotChat chat, BotUser user) {
