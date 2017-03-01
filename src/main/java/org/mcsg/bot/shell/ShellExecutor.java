@@ -77,7 +77,7 @@ public class ShellExecutor {
 			this.process = Runtime.getRuntime().exec("bash " + file.getAbsolutePath());
 			
 			stdout = new ConsoleReader(this.process.getInputStream(), output, false);
-			stderr = new ConsoleReader(this.process.getInputStream(), output, true);
+			stderr = new ConsoleReader(this.process.getErrorStream(), output, true);
 			 
 			stdout.start();
 			stderr.start();

@@ -9,6 +9,7 @@ import java.util.Map;
 import org.mcsg.bot.api.BotChat;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
+import org.mcsg.bot.command.commands.CodeCommand;
 import org.mcsg.bot.command.commands.IsCommand;
 import org.mcsg.bot.command.commands.QueueTestCommand;
 import org.mcsg.bot.command.commands.RandomNumberCommand;
@@ -25,6 +26,7 @@ public class CommandHandler {
 		registerCommand(new QueueTestCommand());
 		registerCommand(new ShellCommand());
 		registerCommand(new VersionCommand());
+		registerCommand(new CodeCommand());
 	}
 
 	public void executeCommand(String msg, BotChat chat, BotUser user) {

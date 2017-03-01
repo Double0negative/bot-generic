@@ -21,6 +21,7 @@ public class ConsoleOutput {
 	public ConsoleOutput(BotChat chat, ShellExecutor exec) {
 		this.chat = chat;
 		this.msg = new DelayedActionMessage(chat);
+		this.exec = exec;
 	}
 	
 	public void sendMessage(String msg) {
@@ -34,7 +35,7 @@ public class ConsoleOutput {
 		lines.add(msg);
 		
 		StringBuilder builder = new StringBuilder();
-		builder.append(enclose).append("\n").append("Output: ").append(exec.getId());
+		builder.append(enclose).append("\n").append("Output: ").append(exec.getId()).append("\n");
 		for(String line : lines) {
 			builder.append(line).append("\n");
 		}
