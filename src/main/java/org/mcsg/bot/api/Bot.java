@@ -20,5 +20,6 @@ public interface Bot {
 	
 	public String getVersion();
 	
+	public String getBrandingString();
 	
 }
