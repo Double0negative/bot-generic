@@ -1,0 +1,41 @@
+package org.mcsg.bot.command.commands;
+
+import org.mcsg.bot.api.BotChat;
+import org.mcsg.bot.api.BotCommand;
+import org.mcsg.bot.api.BotSentMessage;
+import org.mcsg.bot.api.BotUser;
+
+public class QueueTestCommand implements BotCommand{
+
+	@Override
+	public void execute(String cmd, BotChat chat, BotUser user, String[] args) throws Exception {
+		for(int a = 0; a < 15; a++) {
+			chat.queueMessage("Test Queue " + a);
+		}
+		BotSentMessage msg = chat.commitMessage();
+		
+		sleep(5000);
+		msg.edit("Cleared");
+	}
+
+	@Override
+	public String[] getPrefix() {
+		return a(",");
+	}
+
+	@Override
+	public String[] getCommand() {
+		return a("queue");
+	}
+
+	@Override
+	public String getHelp() {
+		return null;
+	}
+
+	@Override
+	public String getUsage() {
+		return null;
+	}
+
+}
