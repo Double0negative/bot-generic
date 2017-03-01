@@ -14,14 +14,12 @@ public class VersionCommand implements BotCommand {
 
 	@Override
 	public String[] getPrefix() {
-		// TODO Auto-generated method stub
-		return null;
+		return a(".");
 	}
 
 	@Override
 	public String[] getCommand() {
-		// TODO Auto-generated method stub
-		return null;
+		return a("v","version", "brand");
 	}
 
 	@Override

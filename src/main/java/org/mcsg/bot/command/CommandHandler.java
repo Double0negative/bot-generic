@@ -13,6 +13,7 @@ import org.mcsg.bot.command.commands.IsCommand;
 import org.mcsg.bot.command.commands.QueueTestCommand;
 import org.mcsg.bot.command.commands.RandomNumberCommand;
 import org.mcsg.bot.command.commands.ShellCommand;
+import org.mcsg.bot.command.commands.VersionCommand;
 
 public class CommandHandler {
 
@@ -23,6 +24,7 @@ public class CommandHandler {
 		registerCommand(new IsCommand());
 		registerCommand(new QueueTestCommand());
 		registerCommand(new ShellCommand());
+		registerCommand(new VersionCommand());
 	}
 
 	public void executeCommand(String msg, BotChat chat, BotUser user) {
