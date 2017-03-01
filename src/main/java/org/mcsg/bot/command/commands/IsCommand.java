@@ -33,7 +33,7 @@ public class IsCommand implements BotCommand {
 
     @Override
     public String[] getCommand() {
-        return a("is");
+        return a("is", "are");
     }
 
 
