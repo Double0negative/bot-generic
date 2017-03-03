@@ -4,7 +4,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.mcsg.bot.api.BotChat;
+import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotSentMessage;
 
 public class DelayedActionMessage {
@@ -13,12 +13,13 @@ public class DelayedActionMessage {
 		     Executors.newSingleThreadScheduledExecutor();
 	
 	private BotSentMessage sent;
-	private BotChat chat;
+	private BotChannel chat;
 	private String msg;
 	
 	private boolean updating;
+	private boolean first = true;
 	
-	public DelayedActionMessage(BotChat chat) {
+	public DelayedActionMessage(BotChannel chat) {
 		this.chat = chat;
 	}
 	
@@ -38,8 +39,9 @@ public class DelayedActionMessage {
 				sent = chat.sendMessage(msg);
 			}
 			updating = false;
-		}, 5L, TimeUnit.SECONDS);
+		}, first ? 1L : 5L, TimeUnit.SECONDS);
 		updating = true;
+		first = false;
 	}
 	
 }

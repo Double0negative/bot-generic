@@ -1,6 +1,6 @@
 package org.mcsg.bot.command.commands;
 
-import org.mcsg.bot.api.BotChat;
+import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotSentMessage;
 import org.mcsg.bot.api.BotUser;
@@ -8,7 +8,7 @@ import org.mcsg.bot.api.BotUser;
 public class QueueTestCommand implements BotCommand{
 
 	@Override
-	public void execute(String cmd, BotChat chat, BotUser user, String[] args) throws Exception {
+	public void execute(String cmd, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
 		for(int a = 0; a < 15; a++) {
 			chat.queueMessage("Test Queue " + a);
 		}

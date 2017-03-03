@@ -6,7 +6,7 @@ public interface BotServer {
 	
 	public Bot getBot();
 
-	public List<BotChat> getChats();
+	public List<BotChannel> getChats();
 	
 	public List<BotUser> getUsers();
 	

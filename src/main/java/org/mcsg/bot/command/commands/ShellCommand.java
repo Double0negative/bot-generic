@@ -1,6 +1,6 @@
 package org.mcsg.bot.command.commands;
 
-import org.mcsg.bot.api.BotChat;
+import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.shell.ShellExecutor;
@@ -9,7 +9,7 @@ import org.mcsg.bot.util.StringUtils;
 public class ShellCommand implements BotCommand{
 
 	@Override
-	public void execute(String cmd, BotChat chat, BotUser user, String[] args) throws Exception {
+	public void execute(String cmd, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
 		String command = StringUtils.implode(args);
 		
 		ShellExecutor exec = new ShellExecutor(chat.getServer().getBot());

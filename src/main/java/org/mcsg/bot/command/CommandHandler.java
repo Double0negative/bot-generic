@@ -6,15 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.mcsg.bot.api.BotChat;
+import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.command.commands.CodeCommand;
+import org.mcsg.bot.command.commands.HiCommand;
 import org.mcsg.bot.command.commands.IsCommand;
 import org.mcsg.bot.command.commands.PingCommand;
 import org.mcsg.bot.command.commands.QueueTestCommand;
 import org.mcsg.bot.command.commands.RandomNumberCommand;
 import org.mcsg.bot.command.commands.ShellCommand;
+import org.mcsg.bot.command.commands.ShellInputCommand;
 import org.mcsg.bot.command.commands.VersionCommand;
 
 public class CommandHandler {
@@ -29,19 +31,23 @@ public class CommandHandler {
 		registerCommand(new VersionCommand());
 		registerCommand(new CodeCommand());
 		registerCommand(new PingCommand());
+		registerCommand(new HiCommand());
+		registerCommand(new ShellInputCommand());
 	}
 
-	public void executeCommand(String msg, BotChat chat, BotUser user) {
+	public void executeCommand(String msg, BotChannel chat, BotUser user) {
 		String[] split = msg.split("\\s+");
 
 		Arrays.toString(split);
+		
+		final String input = msg.substring(msg.indexOf(" ") + 1);
 
 		if(split.length > 0) {
 			BotCommand command = commands.get(split[0]);
 			if(command != null) {
 				async(() -> {
 					try {
-						command.execute(split[0], chat , user, getArgs(split));
+						command.execute(split[0], chat , user, getArgs(split), input);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

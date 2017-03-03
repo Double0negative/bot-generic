@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.mcsg.bot.api.BotChat;
+import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.shell.ShellExecutor;
@@ -22,13 +22,14 @@ public class CodeCommand implements BotCommand{
 	public CodeCommand() {
 		templates.put(".js", new CodeTemplate(null, "node {file}", null, ".js"));
 		templates.put(".groovy", new CodeTemplate("cd {cfiledir}; groovyc {cfile}", "groovy {file}", ".groovy", ""));
-		templates.put(".py", new CodeTemplate(null, "python {file}", null, ".py"));
+		templates.put(".py", new CodeTemplate(null, "python3 {file}", null, ".py"));
 		templates.put(".rb", new CodeTemplate(null, "ruby {file}", null, ".rb"));
 		templates.put(".pl", new CodeTemplate(null, "perl {file}", null, ".pl"));
 	}
 
 	@Override
-	public void execute(String cmd, BotChat chat, BotUser user, String[] args) throws Exception {
+	public void execute(String cmd, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
+		System.out.println(input);
 		CodeTemplate temp = templates.get(cmd);
 		if (temp != null) {
 			long time = System.currentTimeMillis();
@@ -45,7 +46,7 @@ public class CodeCommand implements BotCommand{
 						temp.getCompileLine().replace("{cfiledir}", compileFile.getParentFile().getAbsolutePath())
 						.replace("{cfile}", compileFile.getAbsolutePath()), 0, false, true);*/
 			} else {
-				FileUtils.write(runFile, StringUtils.implode(args), Charset.defaultCharset());
+				FileUtils.write(runFile, input, Charset.defaultCharset());
 			}
 
 			ShellExecutor exec = new ShellExecutor(chat.getServer().getBot());

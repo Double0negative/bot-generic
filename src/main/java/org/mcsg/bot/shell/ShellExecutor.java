@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.io.FileUtils;
 import org.mcsg.bot.api.Bot;
-import org.mcsg.bot.api.BotChat;
+import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotSentMessage;
 import org.mcsg.bot.util.DelayedActionMessage;
 
@@ -34,7 +34,7 @@ public class ShellExecutor {
 
 	private int id;
 	private Bot bot;
-	private BotChat chat;
+	private BotChannel chat;
 	private List<String> commands;
 	private long limit = -1;
 	private Process process;
@@ -51,7 +51,7 @@ public class ShellExecutor {
 		running.put(id, this);
 	}
 
-	public ShellExecutor chat(BotChat chat){
+	public ShellExecutor chat(BotChannel chat){
 		this.chat = chat;
 		return this;
 	}

@@ -2,7 +2,7 @@ package org.mcsg.bot.api;
 
 import java.util.List;
 
-public interface BotChat {
+public interface BotChannel {
 
 	public String getId();
 	

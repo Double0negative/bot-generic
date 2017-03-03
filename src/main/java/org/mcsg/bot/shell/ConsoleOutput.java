@@ -3,22 +3,22 @@ package org.mcsg.bot.shell;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mcsg.bot.api.BotChat;
+import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.util.DelayedActionMessage;
 
 public class ConsoleOutput {
 	private DelayedActionMessage msg;
-	private BotChat chat;
+	private BotChannel chat;
 	private long start = 0;
 	private long time = 30 * 1000;
-	private long maxLines = 20;
+	private long maxLines = 30;
 	private String enclose = "```";
 	private ShellExecutor exec;
 	
 	private List<String> lines = new ArrayList<String>();
 	
 	
-	public ConsoleOutput(BotChat chat, ShellExecutor exec) {
+	public ConsoleOutput(BotChannel chat, ShellExecutor exec) {
 		this.chat = chat;
 		this.msg = new DelayedActionMessage(chat);
 		this.exec = exec;

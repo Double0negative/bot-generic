@@ -4,7 +4,7 @@ public interface BotSentMessage {
 
 	public String getMessage();
 	
-	public BotChat getChat();
+	public BotChannel getChat();
 	
 	public BotSentMessage append(String msg);
 	

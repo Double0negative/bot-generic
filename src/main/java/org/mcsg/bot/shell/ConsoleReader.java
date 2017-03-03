@@ -20,6 +20,7 @@ public class ConsoleReader {
 			String line = null;
 			try {
 				while((line = stream.readLine()) != null) {
+					System.out.println(line);
 					output.sendMessage((error ? "err" : "") + line);
 				}
 			} catch (IOException e) {

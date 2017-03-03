@@ -5,35 +5,29 @@ import java.util.Random;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
-import org.mcsg.bot.util.StringUtils;
 
-public class IsCommand implements BotCommand {
+public class HiCommand implements BotCommand {
+
+    String[] msg = { "Hi", "Hello", "How are you", "Greetings", "Pickles", "Whats up?", "Hi person" };
 
     @Override
     public void execute(String cmd, BotChannel chat, BotUser sender, String[] args, String input) throws Exception {
-        if (new Random(StringUtils.implode(args).hashCode()).nextBoolean()) {
-            chat.sendMessage("Yes");
-        } else {
-            chat.sendMessage("No");
-        }
-
+        chat.sendMessage(msg[new Random().nextInt(msg.length)]);
     }
 
-    
-    
     @Override
     public String getHelp() {
-        return "Is it?";
+        return "Greetings";
     }
 
     @Override
     public String getUsage() {
-        return ".is <query>";
+        return ".hi";
     }
 
     @Override
     public String[] getCommand() {
-        return a("is", "are");
+        return a("hi");
     }
 
 
@@ -43,5 +37,6 @@ public class IsCommand implements BotCommand {
 		return a(".");
 	}
 
+   
 
 }
