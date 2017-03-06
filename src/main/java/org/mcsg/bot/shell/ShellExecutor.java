@@ -67,28 +67,40 @@ public class ShellExecutor {
 	}
 
 	public int execute() {
-		this.output = new ConsoleOutput(chat, this);
+		if(this.chat != null) 
+			this.output = new ConsoleOutput(chat, this);
 		this.file = new File(bot.getSettings().getDataFolder(), "shell_" + System.currentTimeMillis());
-		
-		try {
-			
-			FileUtils.writeLines(file, commands);
-		
-			this.process = Runtime.getRuntime().exec("bash " + file.getAbsolutePath());
-			
-			stdout = new ConsoleReader(this.process.getInputStream(), output, false);
-			stderr = new ConsoleReader(this.process.getErrorStream(), output, true);
-			 
-			stdout.start();
-			stderr.start();
 
-			
+		try {
+
+			FileUtils.writeLines(file, commands);
+
+			this.process = Runtime.getRuntime().exec("bash " + file.getAbsolutePath());
+
+			if(this.chat != null) {
+				stdout = new ConsoleReader(this.process.getInputStream(), output, false);
+				stderr = new ConsoleReader(this.process.getErrorStream(), output, true);
+
+				stdout.start();
+				stderr.start();
+			}
+
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 
 		return getId();
+	}
+
+	public void waitFor() {
+		try {
+			this.process.waitFor();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void writeTo(String str) {
@@ -102,5 +114,5 @@ public class ShellExecutor {
 	}
 
 
-	
+
 }

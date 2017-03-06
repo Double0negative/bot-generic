@@ -14,6 +14,8 @@ public interface Bot {
 	
 	public BotServer getServer(String id);
 	
+	public BotVoiceChannel getVoiceChannel(BotChannel channel);
+	
 	public BotSettings getSettings();
 	
 	public String getRepo();

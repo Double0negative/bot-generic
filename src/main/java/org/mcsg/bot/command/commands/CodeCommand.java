@@ -33,7 +33,7 @@ public class CodeCommand implements BotCommand{
 		CodeTemplate temp = templates.get(cmd);
 		if (temp != null) {
 			long time = System.currentTimeMillis();
-			File runFile = new File(time + temp.getRunExt());
+			File runFile = new File(chat.getServer().getBot().getSettings().getDataFolder(), time + temp.getRunExt());
 			if (temp.getCompileLine() != null) {
 				File compileFile = new File(time + temp.getCompileExt());
 				FileUtils.write(compileFile, StringUtils.implode(args), Charset.defaultCharset());

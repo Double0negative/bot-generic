@@ -15,4 +15,6 @@ public interface BotVoiceChannel extends BotChannel{
 	public void skip();
 	
 	public void pause();
+	
+	public void play();
 }
