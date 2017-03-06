@@ -1,5 +1,6 @@
 package org.mcsg.bot.api;
 
+import java.io.File;
 import java.util.List;
 
 public interface BotChannel {
@@ -19,5 +20,7 @@ public interface BotChannel {
 	public BotSentMessage sendError(String error);
 	
 	public void sendThrowable(Throwable throwable);
+	
+	public void sendFile(File file);
 	
 }

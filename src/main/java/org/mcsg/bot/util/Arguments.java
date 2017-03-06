@@ -17,13 +17,10 @@ public class Arguments {
 			String split[] = arg.split(" ");
 			List<String> swi = Arrays.asList(split[0].split("/"));
 
-			//System.out.println();
 
-			//System.out.println("split (search)"+Arrays.toString(split));
-			//System.out.println("Args" +list.toString());
+			
 			int index = -1;
 			for(String str : swi){
-				//System.out.println(a +" "+ str);
 				if(list.contains("-"+str)){
 					index = list.indexOf("-"+str);
 					break;
@@ -41,9 +38,10 @@ public class Arguments {
 			}
 		}
 		
-		//System.out.println(list);
 		this.args = list.toArray(new String[0]);
-		//System.out.println(Arrays.toString(args));
+		System.out.println(values);
+
+		System.out.println(Arrays.toString(args));
 	}
 
 	public HashMap<String, String> getSwitches(){

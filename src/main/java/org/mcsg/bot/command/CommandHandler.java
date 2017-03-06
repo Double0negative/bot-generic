@@ -11,6 +11,7 @@ import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.command.commands.CodeCommand;
 import org.mcsg.bot.command.commands.HiCommand;
+import org.mcsg.bot.command.commands.ImagePainterCommand;
 import org.mcsg.bot.command.commands.IsCommand;
 import org.mcsg.bot.command.commands.MusicBotCommand;
 import org.mcsg.bot.command.commands.PingCommand;
@@ -35,6 +36,7 @@ public class CommandHandler {
 		registerCommand(new HiCommand());
 		registerCommand(new ShellInputCommand());
 		registerCommand(new MusicBotCommand());
+		registerCommand(new ImagePainterCommand());
 	}
 
 	public void executeCommand(String msg, BotChannel chat, BotUser user) {
