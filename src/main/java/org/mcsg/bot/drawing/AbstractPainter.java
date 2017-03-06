@@ -27,6 +27,15 @@ public abstract class AbstractPainter implements Painter {
 	@Override
 	public abstract void paint(MapWrapper args);
 
+	public void setBackground(Color color) {
+		Color bcolor = g.getColor();
+
+		g.setColor(color);
+		g.fillRect(0, 0, width, height);
+
+		g.setColor(bcolor);
+	}
+
 	public Color getRandomColor(boolean a){
 		return new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255),!a ? 255 : rand.nextInt(255));
 	}
@@ -63,9 +72,20 @@ public abstract class AbstractPainter implements Painter {
 		return new Color(r, g, b, a);
 	}
 
-	public Color incColor(Color color, int inc){
-		return incColor(color, (rand.nextInt(inc * 2) - inc), rand.nextInt(inc * 2) - inc, 
-				rand.nextInt(inc * 2) - inc, rand.nextInt(inc * 2) - inc);
+	public Color randIncColor(Color color, int inc){
+		return randIncColor(color, inc, true);
+	}
+	
+	public Color randIncColor(Color color, int inc, boolean alpha){
+		int r = (int) (rand.nextDouble() * (inc * 2) - inc);
+		int g = (int) (rand.nextDouble() * (inc * 2) - inc);
+		int b = (int) (rand.nextDouble() * (inc * 2) - inc);
+		int a = 0;
+		if(alpha) {
+			a = (int) (rand.nextDouble() * (inc * 2) - inc);
+		} 
+
+		return incColor(color, r,g, b, a);
 	}
 
 }

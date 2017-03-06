@@ -29,9 +29,9 @@ public class CommandHandler {
 		registerCommand(new RandomNumberCommand());
 		registerCommand(new IsCommand());
 		registerCommand(new QueueTestCommand());
-		registerCommand(new ShellCommand());
+		//registerCommand(new ShellCommand());
 		registerCommand(new VersionCommand());
-		registerCommand(new CodeCommand());
+		//registerCommand(new CodeCommand());
 		registerCommand(new PingCommand());
 		registerCommand(new HiCommand());
 		registerCommand(new ShellInputCommand());

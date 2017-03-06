@@ -1,7 +1,9 @@
-package org.mcsg.bot.drawing;
+package org.mcsg.bot.drawing.painters;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import org.mcsg.bot.drawing.AbstractPainter;
+import org.mcsg.bot.drawing.ImageTools;
 import org.mcsg.bot.util.MapWrapper;
 import org.mcsg.bot.util.Point;
 
@@ -26,7 +28,7 @@ public class AbstractShapes extends AbstractPainter{
 				else 
 					g.setColor(darker(g.getColor(), 3));
 			} else if(r < 100){
-				g.setColor(incColor(g.getColor(), 10));
+				g.setColor(randIncColor(g.getColor(), 10));
 			}
 			point = drawRandomShape(point);
 		}
