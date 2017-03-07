@@ -17,10 +17,10 @@ public class Smoke extends AbstractPainter{
 	int b=rand.nextInt(255);
 	int a=rand.nextInt(255);
 
-	int x = rand.nextInt(width);
-	int y = rand.nextInt(height);
+	double x = rand.nextDouble() * width;
+	double y = rand.nextDouble() * height;
 
-	int size = rand.nextInt(45) + 1;
+	double size = rand.nextDouble() * 45 + 1;
 
 
 	public Smoke( BufferedImage img) {
@@ -31,7 +31,6 @@ public class Smoke extends AbstractPainter{
 	@Override
 
 	public void paint(MapWrapper args) {
-		g.setColor(Color.WHITE);
 		
 		g.setStroke(new BasicStroke(rand.nextInt(7)));
 		
@@ -50,17 +49,17 @@ public class Smoke extends AbstractPainter{
 			color  = randIncColor(color, 7, false);
 			g.setColor(color);
 
-			x += rand.nextInt(size) - size / 2;
-			y += rand.nextInt(size) - size / 2;
-			size += rand.nextInt(3) - 1;
+			x += (rand.nextDouble() * size) - (size / 2);
+			y += (rand.nextDouble() * size) - (size / 2);
+			size += (rand.nextDouble() * 3)  - 1;
 
 			size = ImageTools.limit(size, 10, 50);
 			x = ImageTools.limit(x, width, 0);
 			y = ImageTools.limit(y, height, 0);
 			
-			g.fillOval(x, y, size, size);
+			g.fillOval((int)x,(int) y, (int)size, (int)size);
 			//g.setColor(g.getColor().brighter());
-			g.drawOval(x, y, size, size);
+			g.drawOval((int)x,(int) y, (int)size,(int) size);
 		}
 		
 	}
