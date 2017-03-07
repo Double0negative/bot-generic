@@ -16,10 +16,14 @@ import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.drawing.AbstractPainter;
 import org.mcsg.bot.drawing.Painter;
 import org.mcsg.bot.drawing.painters.AbstractShapes;
+import org.mcsg.bot.drawing.painters.Circles;
 import org.mcsg.bot.drawing.painters.Clusters;
+import org.mcsg.bot.drawing.painters.DotLines;
+import org.mcsg.bot.drawing.painters.Dots;
 import org.mcsg.bot.drawing.painters.Lines;
 import org.mcsg.bot.drawing.painters.Shapes;
 import org.mcsg.bot.drawing.painters.Smoke;
+import org.mcsg.bot.drawing.painters.Sunset;
 import org.mcsg.bot.util.Arguments; 
 import org.mcsg.bot.util.MapWrapper;
 
@@ -34,6 +38,11 @@ public class ImagePainterCommand implements BotCommand{
 		this.painters.put("cluster", Clusters.class);
 		this.painters.put("lines", Lines.class);
 		this.painters.put("smoke", Smoke.class);
+		this.painters.put("sunset", Sunset.class);
+		this.painters.put("circles", Circles.class);
+		this.painters.put("dots", Dots.class);
+		this.painters.put("dotlines", DotLines.class);
+
 	}
 
 	@Override

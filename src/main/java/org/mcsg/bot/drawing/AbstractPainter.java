@@ -56,7 +56,7 @@ public abstract class AbstractPainter implements Painter {
 		return incColor(color, -inc, -inc, -inc, 0);
 	}
 
-	private Color incColor(Color color, int rinc, int binc, int ginc, int ainc){
+	public Color incColor(Color color, int rinc, int binc, int ginc, int ainc){
 		int r = color.getRed();
 		int g = color.getGreen();
 		int b = color.getBlue();
