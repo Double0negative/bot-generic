@@ -1,10 +1,13 @@
 package org.mcsg.bot.command;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
@@ -29,9 +32,9 @@ public class CommandHandler {
 		registerCommand(new RandomNumberCommand());
 		registerCommand(new IsCommand());
 		registerCommand(new QueueTestCommand());
-		//registerCommand(new ShellCommand());
+		registerCommand(new ShellCommand());
 		registerCommand(new VersionCommand());
-		//registerCommand(new CodeCommand());
+		registerCommand(new CodeCommand());
 		registerCommand(new PingCommand());
 		registerCommand(new HiCommand());
 		registerCommand(new ShellInputCommand());
@@ -40,6 +43,28 @@ public class CommandHandler {
 	}
 
 	public void executeCommand(String msg, BotChannel chat, BotUser user) {
+		
+		File file = new File("numbers.txt");
+		int sum = 0;
+		
+		try {
+			Scanner scanner = new Scanner(file);
+			while(scanner.hasNext()) {
+				String line = scanner.nextLine();
+				sum += Integer.parseInt(line);
+			}
+			
+			System.out.println(sum);
+			
+			
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		
+		
+		
 		String[] split = msg.split("\\s+");
 
 		Arrays.toString(split);

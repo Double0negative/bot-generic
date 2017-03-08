@@ -38,7 +38,7 @@ public class Sunset extends AbstractPainter{
 
 	
 	private void drawLand() {
-		Color color = new Color(0, 0, rand.nextInt(255));
+		Color color = new Color(0, rand.nextInt(255), 0 );
 		int y = rand.nextInt(height);
 		
 		for(int x = 0; x < width; x++) {
@@ -46,7 +46,7 @@ public class Sunset extends AbstractPainter{
 			
 			g.drawLine(x, y, x, height);
 
-			color = this.incColor(color, 0, 0,rand.nextInt(3) - 1,  0);
+			color = this.incColor(color, 0,rand.nextInt(3) - 1, 0, 0);
 			
 			y += rand.nextInt(3) - 1;
 		}
