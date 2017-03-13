@@ -27,9 +27,7 @@ public class Lines extends AbstractPainter{
 	}
 
 
-	public void paint(MapWrapper args) {
-		setBackground(Color.BLACK);
-		
+	public void paint(MapWrapper args) {		
 		g.setStroke(new BasicStroke(args.getInt("stroke-size", 2)));
 
 		boolean limit = args.getBoolean("limit", rand.nextBoolean());

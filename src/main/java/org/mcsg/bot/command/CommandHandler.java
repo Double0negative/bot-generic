@@ -43,28 +43,6 @@ public class CommandHandler {
 	}
 
 	public void executeCommand(String msg, BotChannel chat, BotUser user) {
-		
-		File file = new File("numbers.txt");
-		int sum = 0;
-		
-		try {
-			Scanner scanner = new Scanner(file);
-			while(scanner.hasNext()) {
-				String line = scanner.nextLine();
-				sum += Integer.parseInt(line);
-			}
-			
-			System.out.println(sum);
-			
-			
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
-		
-		
-		
-		
-		
 		String[] split = msg.split("\\s+");
 
 		Arrays.toString(split);
@@ -78,8 +56,7 @@ public class CommandHandler {
 					try {
 						command.execute(split[0], chat , user, getArgs(split), input);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						chat.sendThrowable(e);
 					}
 				});
 			}

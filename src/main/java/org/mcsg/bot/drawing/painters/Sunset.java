@@ -14,6 +14,11 @@ public class Sunset extends AbstractPainter{
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	private int sunx = rand.nextInt(width);
+	private int suny = 0;
+	
+	
 	@Override
 	public void paint(MapWrapper args) {
 		drawBackground();
@@ -42,6 +47,10 @@ public class Sunset extends AbstractPainter{
 		int y = rand.nextInt(height);
 		
 		for(int x = 0; x < width; x++) {
+			if(x == sunx) {
+				suny = y;
+			}
+			
 			g.setColor(color);
 			
 			g.drawLine(x, y, x, height);

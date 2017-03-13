@@ -21,6 +21,6 @@ public interface BotChannel {
 	
 	public void sendThrowable(Throwable throwable);
 	
-	public void sendFile(File file);
+	public void sendFile(File file) throws Exception;
 	
 }

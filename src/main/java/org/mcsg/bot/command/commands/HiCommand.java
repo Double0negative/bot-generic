@@ -14,7 +14,7 @@ public class HiCommand implements BotCommand {
     public void execute(String cmd, BotChannel chat, BotUser sender, String[] args, String input) throws Exception {
         chat.sendMessage(msg[new Random().nextInt(msg.length)]);
     }
-
+ 
     @Override
     public String getHelp() {
         return "Greetings";

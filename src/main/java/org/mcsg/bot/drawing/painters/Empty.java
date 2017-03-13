@@ -5,19 +5,17 @@ import java.awt.image.BufferedImage;
 import org.mcsg.bot.drawing.AbstractPainter;
 import org.mcsg.bot.util.MapWrapper;
 
-public class Shapes extends AbstractPainter{
+public class Empty extends AbstractPainter{
 
-	public Shapes(BufferedImage img) {
+	public Empty(BufferedImage img) {
 		super(img);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void paint(MapWrapper args) {
-		
+		// TODO Auto-generated method stub
 		
 	}
-	
-
-	
 
 }

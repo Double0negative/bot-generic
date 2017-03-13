@@ -2,6 +2,7 @@ package org.mcsg.bot.drawing;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -22,6 +23,9 @@ public abstract class AbstractPainter implements Painter {
 		this.height = img.getHeight();
 		this.width = img.getWidth();
 		this.g = (Graphics2D)img.getGraphics();
+		
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
 	}
 
 	@Override

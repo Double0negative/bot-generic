@@ -47,6 +47,14 @@ public class Arguments {
 	public HashMap<String, String> getSwitches(){
 		return values;
 	}
+	
+	public String getSwitch(String swi) {
+		return getSwitches().get(swi);
+	}
+	
+	public boolean hasSwitch(String swi) {
+		return getSwitches().containsKey(swi);
+	}
 
 	public String[] getArgs(){
 		return args;
