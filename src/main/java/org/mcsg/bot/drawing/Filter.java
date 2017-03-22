@@ -11,7 +11,7 @@ public interface Filter {
 	public BufferedImage filter(BufferedImage input,  Graphics2D g, MapWrapper map);
 	
 	public default BufferedImage blank(BufferedImage img) {
-		BufferedImage output = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+		BufferedImage output = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		
 		Graphics2D g = (Graphics2D)output.getGraphics();
 		
@@ -19,6 +19,10 @@ public interface Filter {
 		g.fillRect(0, 0, output.getWidth(), output.getHeight());
 		
 		return output;
+	}
+	
+	public default BufferedImage scale(BufferedImage img, int width, int height) {
+		return ImageTools.scale(img, width, height);
 	}
 	
 	public default BufferedImage duplicate(BufferedImage input) {

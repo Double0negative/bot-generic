@@ -7,6 +7,8 @@ public interface BotChannel {
 
 	public String getId();
 	
+	public String getName();
+	
 	public BotServer getServer();
 	
 	public List<BotUser> getUsers();

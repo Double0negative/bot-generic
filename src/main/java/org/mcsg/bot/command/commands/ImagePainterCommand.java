@@ -19,13 +19,17 @@ import org.mcsg.bot.drawing.AbstractPainter;
 import org.mcsg.bot.drawing.Filter;
 import org.mcsg.bot.drawing.Painter;
 import org.mcsg.bot.drawing.filter.Distort;
+import org.mcsg.bot.drawing.filter.Edge;
+import org.mcsg.bot.drawing.filter.Smoosh_;
 import org.mcsg.bot.drawing.filter.Pixelate;
+import org.mcsg.bot.drawing.filter.Smoosh;
 import org.mcsg.bot.drawing.painters.AbstractShapes;
 import org.mcsg.bot.drawing.painters.Circles;
 import org.mcsg.bot.drawing.painters.Clusters;
 import org.mcsg.bot.drawing.painters.DotLines;
 import org.mcsg.bot.drawing.painters.Dots;
 import org.mcsg.bot.drawing.painters.Empty;
+import org.mcsg.bot.drawing.painters.Landscape;
 import org.mcsg.bot.drawing.painters.Lines;
 import org.mcsg.bot.drawing.painters.BasicShapes;
 import org.mcsg.bot.drawing.painters.Smoke;
@@ -52,10 +56,14 @@ public class ImagePainterCommand implements BotCommand{
 		this.painters.put("dots", Dots.class);
 		this.painters.put("dotlines", DotLines.class);
 		this.painters.put("spray", SprayPaint.class);
+		this.painters.put("landscape", Landscape.class);
+
 		this.painters.put("empty", Empty.class);
 
 		this.filters.put("pixel", Pixelate.class);
 		this.filters.put("distort", Distort.class);
+		this.filters.put("smoosh", Smoosh.class);
+		this.filters.put("edge", Edge.class);
 
 	}
 
@@ -103,27 +111,26 @@ public class ImagePainterCommand implements BotCommand{
 		}
 
 		Color bg = Color.BLACK;
-		
+
 		if("none".equalsIgnoreCase(arge.getSwitch("background"))) {
 			bg = null;
 		} 
 		if(arge.hasSwitch("background")) {
 			bg = Color.decode(arge.getSwitch("background"));
 		}
-				
+
 		if(!arge.hasSwitch("import"))
 			painter.setBackground(bg);
 		painter.paint(wrap);
 
 		if(arge.getSwitches().containsKey("filter")) {
-			Class<? extends Filter> fClass = filters.get(arge.getSwitches().get("filter"));
-
-			
-			
-			
-			if(fClass != null){
-				Filter filter = fClass.newInstance();
-				img = filter.filter(img, (Graphics2D) img.getGraphics(), wrap);
+			for(String fstr : arge.getSwitches().get("filter").split(",")) {
+				
+				Class<? extends Filter> fClass = filters.get(fstr);
+				if(fClass != null){
+					Filter filter = fClass.newInstance();
+					img = filter.filter(img, (Graphics2D) img.getGraphics(), wrap);
+				}
 			}
 		}
 

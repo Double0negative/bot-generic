@@ -24,4 +24,10 @@ public interface Bot {
 	
 	public String getBrandingString();
 	
+	public BotChannel getDefaultChat();
+	
+	public void log(String prefix, String log);
+	
+	public void log(String log);
+	
 }

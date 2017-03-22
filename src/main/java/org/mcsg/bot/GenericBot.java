@@ -3,6 +3,8 @@ package org.mcsg.bot;
 import org.mcsg.bot.api.Bot;
 import org.mcsg.bot.api.BotSettings;
 import org.mcsg.bot.command.CommandHandler;
+import static spark.Spark.*;
+
 
 public abstract class GenericBot implements Bot{
 
@@ -12,9 +14,8 @@ public abstract class GenericBot implements Bot{
 	public GenericBot() {
 		this.settings = new GenericSettings();
 		this.handler = new CommandHandler();
+		
 	}
-	
-	
 	
 
 	@Override

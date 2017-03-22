@@ -28,10 +28,10 @@ public class Pixelate implements Filter{
 		this.points = new ArrayList<>();
 		this.data = new HashMap<>();
 
-		int size = map.getInt("size", 20);
+		int size = map.getInt("pixelsize", 20);
 		int dsize = (int) ((size + 0.0) * 1); 
 
-		boolean distort = map.getBoolean("distort", false);
+		boolean distort = map.getBoolean("pixeldistort", false);
 
 		for(int x = 0; x < img.getWidth(); x+=size){
 			for(int y = 0; y < img.getHeight(); y+=size){
