@@ -26,8 +26,14 @@ public interface Bot {
 	
 	public BotChannel getDefaultChat();
 	
+	public PermissionManager getPermissionManager();
+	
 	public void log(String prefix, String log);
 	
 	public void log(String log);
+	
+	public void err(String prefix, String log);
+	
+	public void err(String log);
 	
 }
