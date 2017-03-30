@@ -85,6 +85,19 @@ public class ShellExecutor {
 				stderr.start();
 			}
 
+			if(limit > 0) {
+				new Thread() {
+					public void run() {
+						try {
+							Thread.sleep(limit);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						kill("timeout");
+					}
+				}.start();
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -113,6 +126,11 @@ public class ShellExecutor {
 		return id;
 	}
 
-
+	public void kill(String msg) {
+		if(process.isAlive()) {
+			process.destroyForcibly();
+			chat.sendMessage("Process ID " + getId() + " killed. (" + msg + ")");
+		}
+	}
 
 }

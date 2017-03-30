@@ -12,10 +12,12 @@ import java.util.Scanner;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
-import org.mcsg.bot.command.commands.CodeCommand;
+import org.mcsg.bot.command.commands.ScriptCommand;
 import org.mcsg.bot.command.commands.HiCommand;
 import org.mcsg.bot.command.commands.ImagePainterCommand;
 import org.mcsg.bot.command.commands.IsCommand;
+import org.mcsg.bot.command.commands.JavaCommand;
+import org.mcsg.bot.command.commands.KillCommand;
 import org.mcsg.bot.command.commands.MusicBotCommand;
 import org.mcsg.bot.command.commands.PermissionCommand;
 import org.mcsg.bot.command.commands.PingCommand;
@@ -26,6 +28,7 @@ import org.mcsg.bot.command.commands.ShellCommand;
 import org.mcsg.bot.command.commands.ShellInputCommand;
 import org.mcsg.bot.command.commands.StopCommand;
 import org.mcsg.bot.command.commands.VersionCommand;
+import org.mcsg.bot.util.StringUtils;
 
 public class CommandHandler {
 
@@ -38,7 +41,7 @@ public class CommandHandler {
 		registerCommand(new QueueTestCommand());
 		registerCommand(new ShellCommand());
 		registerCommand(new VersionCommand());
-		registerCommand(new CodeCommand());
+		registerCommand(new ScriptCommand());
 		registerCommand(new PingCommand());
 		registerCommand(new HiCommand());
 		registerCommand(new ShellInputCommand());
@@ -47,6 +50,8 @@ public class CommandHandler {
 		registerCommand(new SayCommand());
 		registerCommand(new PermissionCommand());
 		registerCommand(new StopCommand());
+		registerCommand(new JavaCommand());
+		registerCommand(new KillCommand());
 	}
 
 	public void executeCommand(String msg, BotChannel chat, BotUser user) {
@@ -61,8 +66,8 @@ public class CommandHandler {
 			if(command != null) {
 				async(() -> {
 					try {
-						if(command.getPermission() == null || chat.getServer().getBot().getPermissionManager().hasPermission(chat.getServer(), user, command.getPermission())){
-							command.execute(split[0], chat.getServer(), chat , user, getArgs(split), input);
+						if(command.getPermission() == null || chat.getServer().getBot().getPermissionManager().hasPermission(chat.getServer(), user, command.getPermission() + ".use")){
+							command.execute(StringUtils.replaceAll(split[0], "", command.getPrefix()), chat.getServer(), chat , user, getArgs(split), input);
 						} else {
 							chat.sendMessage("("+user.getUsername() + ") You do not have permission to use " + split[0]);
 						}
