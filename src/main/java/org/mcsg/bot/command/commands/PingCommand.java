@@ -2,8 +2,10 @@ package org.mcsg.bot.command.commands;
 import java.net.InetAddress;
 import java.nio.charset.Charset;
 
+import org.mcsg.bot.api.Bot;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
+import org.mcsg.bot.api.BotServer;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.shell.ShellExecutor;
 import org.mcsg.bot.util.StringUtils;
@@ -12,7 +14,7 @@ import org.mcsg.bot.util.StringUtils;
 public class PingCommand implements BotCommand {
 
     @Override
-    public void execute(String cmd, BotChannel chat, BotUser sender, String[] args, String input) throws Exception {
+    public void execute(String cmd, BotServer server, BotChannel chat, BotUser sender, String[] args, String input) throws Exception {
         if (args.length == 0) {
             chat.sendMessage("Pong!");
         } else if (args.length == 1) {

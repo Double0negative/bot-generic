@@ -8,7 +8,7 @@ public interface BotUser {
 	
 	public String getUsername();
 	
-	public List<String> getGroups();
+	public List<String> getGroups(BotServer server);
 	
 	public void sendMessage(String msg);
 }

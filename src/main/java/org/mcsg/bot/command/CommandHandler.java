@@ -57,7 +57,7 @@ public class CommandHandler {
 			if(command != null) {
 				async(() -> {
 					try {
-						command.execute(split[0], chat , user, getArgs(split), input);
+						command.execute(split[0], chat.getServer(), chat , user, getArgs(split), input);
 					} catch (Exception e) {
 						chat.sendThrowable(e);
 					}

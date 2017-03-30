@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.mcsg.bot.api.Bot;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
+import org.mcsg.bot.api.BotServer;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.shell.ShellExecutor;
 import org.mcsg.bot.util.StringUtils;
@@ -28,7 +30,7 @@ public class CodeCommand implements BotCommand{
 	}
 
 	@Override
-	public void execute(String cmd, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
+	public void execute(String cmd,  BotServer server, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
 		System.out.println(input);
 		CodeTemplate temp = templates.get(cmd);
 		if (temp != null) {

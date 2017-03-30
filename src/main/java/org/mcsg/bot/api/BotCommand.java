@@ -9,7 +9,7 @@ public interface BotCommand {
      * @param args
      * @throws Exception
      */
-    public void execute(String cmd, BotChannel chat, BotUser user, String[] args, String input) throws Exception;
+    public void execute(String cmd, BotServer server, BotChannel chat, BotUser user, String[] args, String input) throws Exception;
 
     public String[] getPrefix();
     

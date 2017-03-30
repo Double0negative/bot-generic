@@ -12,8 +12,10 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import org.mcsg.bot.api.Bot;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
+import org.mcsg.bot.api.BotServer;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.drawing.AbstractPainter;
 import org.mcsg.bot.drawing.Filter;
@@ -68,7 +70,7 @@ public class ImagePainterCommand implements BotCommand{
 	}
 
 	@Override
-	public void execute(String cmd, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
+	public void execute(String cmd,  BotServer server, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
 		Arguments arge = new Arguments(args, "background/bg arg", "resolution/res arg", "filter arg", "import arg");
 
 		String genName = getRandomKey(painters);

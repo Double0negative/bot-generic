@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mcsg.bot.api.Bot;
+import org.mcsg.bot.api.BotServer;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.api.PermissionManager;
 import org.mcsg.bot.util.FileUtils;
@@ -26,7 +27,7 @@ public class GenericPermissionManager implements PermissionManager{
 
 	protected File file;
 	protected Bot bot;
-	protected PermissionNode tree;
+	protected Map<String, PermissionNode> tree;
 
 	protected ObjectMapper mapper = new ObjectMapper();
 
@@ -48,7 +49,7 @@ public class GenericPermissionManager implements PermissionManager{
 		try {
 			String json = FileUtils.readFile(this.file);
 
-			tree = mapper.readValue(json, PermissionNode.class);
+			tree = mapper.readValue(json, new TypeReference<Map<String, PermissionNode>>(){});
 		} catch (IOException e) {
 			bot.err("Failed to load permission manager, could not load json "  + e.getMessage());
 			e.printStackTrace();
@@ -57,10 +58,14 @@ public class GenericPermissionManager implements PermissionManager{
 	}
 
 	@Override
-	public boolean hasPermission(BotUser user, String perm) {
+	public boolean hasPermission(BotServer server, BotUser user, String perm) {
 		List<String> perms = getPermissionList(perm);
-		PermissionNode current = tree;
+		PermissionNode current = tree.get(server.getId());
 
+		if(current == null) {
+			return false;
+		}
+		
 		while(perms.size() > 0) {
 			current = traverseTree(current, perms);
 			
@@ -72,38 +77,41 @@ public class GenericPermissionManager implements PermissionManager{
 					return true;
 				}
 			}
+			if(current.getGroups().contains("_default")) {
+				return true;
+			}
 		}
 		
 		return false;
 	}
 
 	@Override
-	public void addGroupPermission(String group, String perm) {
-		PermissionNode node = getDestinationNode(perm);
+	public void addGroupPermission(BotServer server, String group, String perm) {
+		PermissionNode node = getDestinationNode(server.getId(), perm);
 		node.getGroups().add(group);
 		save();
 	}
 
 
 	@Override
-	public void removeGroupPermission(String group, String perm) {
-		PermissionNode node = getDestinationNode(perm);
+	public void removeGroupPermission(BotServer server, String group, String perm) {
+		PermissionNode node = getDestinationNode(server.getId(), perm);
 		node.getGroups().remove(group);
 		save();
 	}
 
 
 	@Override
-	public void addPermission(BotUser user, String perm) {
-		PermissionNode node = getDestinationNode(perm);
+	public void addPermission(BotServer server, BotUser user, String perm) {
+		PermissionNode node = getDestinationNode(server.getId(), perm);
 		node.getUsers().add(user.getId());
 		save();
 	}
 
 
 	@Override
-	public void removePermission(BotUser user, String perm) {
-		PermissionNode node = getDestinationNode(perm);
+	public void removePermission(BotServer server, BotUser user, String perm) {
+		PermissionNode node = getDestinationNode(server.getId(), perm);
 		node.getUsers().remove(user.getId());
 		save();
 	}
@@ -136,19 +144,29 @@ public class GenericPermissionManager implements PermissionManager{
 	}
 	
 	
-	private PermissionNode getDestinationNode(String perm) {
+	private PermissionNode getDestinationNode(String server, String perm) {
 
 		if(perm == null) {
 			return null;
 		}
 
 		if(perm.length() == 0 || perm.equalsIgnoreCase("*")) {
-			return tree;
+			PermissionNode node = tree.get(server);
+			if(node == null) {
+				node = new PermissionNode();
+				tree.put(server, node);
+			}
+			return node;
 		}
 
 
 		List<String> perms = getPermissionList(perm);
-		PermissionNode current = tree;
+		PermissionNode current = tree.get(server);
+		
+		if(current == null) {
+			current = new PermissionNode();
+			tree.put(server, current);
+		}
 
 		while(perms.size() > 0) {
 			current = traverseTree(current, perms);

@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.mcsg.bot.api.Bot;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
+import org.mcsg.bot.api.BotServer;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.api.BotVoiceChannel;
 import org.mcsg.bot.shell.ShellExecutor;
@@ -17,9 +18,9 @@ public class MusicBotCommand implements BotCommand{
 	private static final AtomicInteger id = new AtomicInteger(0);
 	
 	@Override
-	public void execute(String cmd, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
+	public void execute(String cmd, BotServer server,  BotChannel chat, BotUser user, String[] args, String input) throws Exception {
+		Bot bot = server.getBot();
 		BotVoiceChannel voice = chat.getServer().getBot().getVoiceChannel(chat);
-		Bot bot = chat.getServer().getBot();
 		if(voice != null) {
 			if(cmd.contains("play")) {
 				if(args.length == 0) {
