@@ -39,6 +39,12 @@ public class HiCommand implements BotCommand {
 		return a(".");
 	}
 
+	@Override
+	public String getPermission() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
    
 
 }

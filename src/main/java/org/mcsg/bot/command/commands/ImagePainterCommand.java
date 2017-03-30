@@ -174,4 +174,9 @@ public class ImagePainterCommand implements BotCommand{
 
 	}
 
+	@Override
+	public String getPermission() {
+		return "paint";
+	}
+
 }

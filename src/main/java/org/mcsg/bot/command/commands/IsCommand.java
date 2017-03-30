@@ -46,4 +46,12 @@ public class IsCommand implements BotCommand {
 	}
 
 
+
+	@Override
+	public String getPermission() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

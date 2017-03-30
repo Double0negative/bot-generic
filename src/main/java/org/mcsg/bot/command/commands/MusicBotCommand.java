@@ -77,6 +77,11 @@ public class MusicBotCommand implements BotCommand{
 		return null;
 	}
 
+	@Override
+	public String getPermission() {
+		return "player";
+	}
+
 
 
 

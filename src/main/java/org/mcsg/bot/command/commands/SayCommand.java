@@ -39,4 +39,9 @@ public class SayCommand implements BotCommand{
 		return null;
 	}
 
+	@Override
+	public String getPermission() {
+		return "say";
+	}
+
 }

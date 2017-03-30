@@ -45,6 +45,11 @@ public class ShellInputCommand implements BotCommand {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getPermission() {
+		return "in";
+	}
 	
 
 }

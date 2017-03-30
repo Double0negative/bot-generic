@@ -21,7 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 public class GenericPermissionManager implements PermissionManager{
 
@@ -51,7 +53,8 @@ public class GenericPermissionManager implements PermissionManager{
 
 			tree = mapper.readValue(json, new TypeReference<Map<String, PermissionNode>>(){});
 		} catch (IOException e) {
-			bot.err("Failed to load permission manager, could not load json "  + e.getMessage());
+			bot.err("Failed to load permission manager, could not load json");
+			bot.throwable(e);
 			e.printStackTrace();
 		}
 
@@ -59,17 +62,26 @@ public class GenericPermissionManager implements PermissionManager{
 
 	@Override
 	public boolean hasPermission(BotServer server, BotUser user, String perm) {
+		return hasPermission(server, user.getId(), perm);
+	}
+	
+	@Override
+	public boolean hasPermission(BotServer server, String user, String perm) {
 		List<String> perms = getPermissionList(perm);
 		PermissionNode current = tree.get(server.getId());
 
-		if(current == null) {
+		if(user != null && user.equalsIgnoreCase(bot.getAdminId())) {
+			return true;
+		}
+		
+		if(current == null || user == null || perm == null) {
 			return false;
 		}
 		
+		
 		while(perms.size() > 0) {
-			current = traverseTree(current, perms);
 			
-			if(current.getUsers().contains(user.getId())) {
+			if(current.getUsers().contains(user)) {
 				return true;
 			}
 			for(String group : current.getGroups()) {
@@ -80,6 +92,8 @@ public class GenericPermissionManager implements PermissionManager{
 			if(current.getGroups().contains("_default")) {
 				return true;
 			}
+			
+			current = traverseTree(current, perms);
 		}
 		
 		return false;
@@ -102,23 +116,23 @@ public class GenericPermissionManager implements PermissionManager{
 
 
 	@Override
-	public void addPermission(BotServer server, BotUser user, String perm) {
+	public void addPermission(BotServer server, String user, String perm) {
 		PermissionNode node = getDestinationNode(server.getId(), perm);
-		node.getUsers().add(user.getId());
+		node.getUsers().add(user);
 		save();
 	}
 
 
 	@Override
-	public void removePermission(BotServer server, BotUser user, String perm) {
+	public void removePermission(BotServer server, String user, String perm) {
 		PermissionNode node = getDestinationNode(server.getId(), perm);
-		node.getUsers().remove(user.getId());
+		node.getUsers().remove(user);
 		save();
 	}
 
 	private void save() {
 		try {
-			String json = mapper.writeValueAsString(tree);
+			String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tree);
 			
 			FileUtils.writeFile(this.file, json);
 		} catch (IOException e) {
@@ -134,6 +148,10 @@ public class GenericPermissionManager implements PermissionManager{
 	
 	private PermissionNode traverseTree(PermissionNode node, List<String> perms) {
 		String key = perms.remove(0);
+				
+		if(node == null) {
+			throw null;
+		}
 		
 		PermissionNode next = node.getNext().get(key);
 		if(next == null) {
@@ -175,11 +193,9 @@ public class GenericPermissionManager implements PermissionManager{
 		return current;
 	}
 
-	private class PermissionNode {
-		@Getter private ArrayList<String> users = new ArrayList<>();
-		@Getter private ArrayList<String> groups = new ArrayList<>();
-		@Getter @Setter  private Map<String, PermissionNode> next = new HashMap<>();
-	}
+	
+
+
 
 
 

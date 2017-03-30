@@ -1,16 +1,25 @@
 package org.mcsg.bot.command.commands;
 
-import org.mcsg.bot.api.Bot;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotServer;
 import org.mcsg.bot.api.BotUser;
 
-public class VersionCommand implements BotCommand {
+public class StopCommand implements BotCommand{
 
 	@Override
-	public void execute(String cmd,  BotServer server, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
-		chat.sendMessage(chat.getServer().getBot().getBrandingString());
+	public void execute(String cmd, BotServer server, BotChannel chat, BotUser user, String[] args, String input)
+			throws Exception {
+		
+		chat.sendMessage("Stopping bot..");
+		
+		server.getBot().stop();
+		
+	}
+
+	@Override
+	public String getPermission() {
+		return "stop";
 	}
 
 	@Override
@@ -20,7 +29,7 @@ public class VersionCommand implements BotCommand {
 
 	@Override
 	public String[] getCommand() {
-		return a("v","version", "brand");
+		return a("stop");
 	}
 
 	@Override
@@ -31,12 +40,6 @@ public class VersionCommand implements BotCommand {
 
 	@Override
 	public String getUsage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getPermission() {
 		// TODO Auto-generated method stub
 		return null;
 	}

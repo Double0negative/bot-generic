@@ -52,5 +52,10 @@ public class PingCommand implements BotCommand {
 		return a(".");
 	}
 
+	@Override
+	public String getPermission() {
+		return "ping";
+	}
+
     
 }

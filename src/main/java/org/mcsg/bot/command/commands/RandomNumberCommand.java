@@ -53,4 +53,10 @@ public class RandomNumberCommand implements BotCommand{
 		return a("rand", "random");
 	}
 
+	@Override
+	public String getPermission() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

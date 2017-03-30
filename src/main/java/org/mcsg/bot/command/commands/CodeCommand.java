@@ -89,5 +89,10 @@ public class CodeCommand implements BotCommand{
 		private String runExt;
 	}
 
+	@Override
+	public String getPermission() {
+		return "code";
+	}
+
 
 }

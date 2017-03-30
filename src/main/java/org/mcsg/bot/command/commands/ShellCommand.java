@@ -41,4 +41,9 @@ public class ShellCommand implements BotCommand{
 		return null;
 	}
 
+	@Override
+	public String getPermission() {
+		return "sh";
+	}
+
 }

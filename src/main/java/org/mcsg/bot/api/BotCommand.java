@@ -11,6 +11,8 @@ public interface BotCommand {
      */
     public void execute(String cmd, BotServer server, BotChannel chat, BotUser user, String[] args, String input) throws Exception;
 
+    public String getPermission();
+    
     public String[] getPrefix();
     
     /**

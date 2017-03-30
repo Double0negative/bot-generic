@@ -28,6 +28,8 @@ public interface Bot {
 	
 	public PermissionManager getPermissionManager();
 	
+	public String getAdminId();
+	
 	public void log(String prefix, String log);
 	
 	public void log(String log);
@@ -35,5 +37,9 @@ public interface Bot {
 	public void err(String prefix, String log);
 	
 	public void err(String log);
+	
+	public void throwable(Throwable t);
+	
+	public void stop();
 	
 }

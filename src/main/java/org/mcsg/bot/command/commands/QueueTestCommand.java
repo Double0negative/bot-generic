@@ -40,4 +40,10 @@ public class QueueTestCommand implements BotCommand{
 		return null;
 	}
 
+	@Override
+	public String getPermission() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
