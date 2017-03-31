@@ -22,11 +22,11 @@ public class ScriptCommand implements BotCommand{
 	private Map<String, CodeTemplate> templates = new HashMap<>();
 
 	public ScriptCommand() {
-		templates.put(".js", new CodeTemplate(null, "node {file}", null, ".js"));
-		templates.put(".groovy", new CodeTemplate("cd {cfiledir}; groovyc {cfile}", "groovy {file}", ".groovy", ""));
-		templates.put(".py", new CodeTemplate(null, "python3 {file}", null, ".py"));
-		templates.put(".rb", new CodeTemplate(null, "ruby {file}", null, ".rb"));
-		templates.put(".pl", new CodeTemplate(null, "perl {file}", null, ".pl"));
+		templates.put("js", new CodeTemplate(null, "node {file}", null, ".js"));
+		templates.put("groovy", new CodeTemplate("cd {cfiledir}; groovyc {cfile}", "groovy {file}", ".groovy", ""));
+		templates.put("py", new CodeTemplate(null, "python3 {file}", null, ".py"));
+		templates.put("rb", new CodeTemplate(null, "ruby {file}", null, ".rb"));
+		templates.put("pl", new CodeTemplate(null, "perl {file}", null, ".pl"));
 	}
 
 	@Override
