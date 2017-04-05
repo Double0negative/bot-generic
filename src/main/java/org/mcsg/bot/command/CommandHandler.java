@@ -13,6 +13,7 @@ import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.command.commands.ScriptCommand;
+import org.mcsg.bot.command.commands.GameCommand;
 import org.mcsg.bot.command.commands.HiCommand;
 import org.mcsg.bot.command.commands.ImagePainterCommand;
 import org.mcsg.bot.command.commands.IsCommand;
@@ -52,6 +53,7 @@ public class CommandHandler {
 		registerCommand(new StopCommand());
 		registerCommand(new JavaCommand());
 		registerCommand(new KillCommand());
+		registerCommand(new GameCommand());
 	}
 
 	public void executeCommand(String msg, BotChannel chat, BotUser user) {
@@ -62,6 +64,7 @@ public class CommandHandler {
 		final String input = msg.substring(msg.indexOf(" ") + 1);
 
 		if(split.length > 0) {
+			split[0] = split[0].toLowerCase();
 			BotCommand command = commands.get(split[0]);
 			if(command != null) {
 				async(() -> {

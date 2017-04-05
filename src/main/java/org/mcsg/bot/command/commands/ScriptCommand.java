@@ -37,16 +37,21 @@ public class ScriptCommand implements BotCommand{
 			long time = System.currentTimeMillis();
 			File runFile = new File(chat.getServer().getBot().getSettings().getDataFolder(), time + temp.getRunExt());
 			if (temp.getCompileLine() != null) {
-				File compileFile = new File(time + temp.getCompileExt());
+				File compileFile = new File(server.getBot().getSettings().getDataFolder(), time + temp.getCompileExt());
 				FileUtils.write(compileFile, StringUtils.implode(args), Charset.defaultCharset());
 				
 				ShellExecutor exec = new ShellExecutor(chat.getServer().getBot());
 				
-				//exec.command(command)
+				System.out.println(compileFile.getParentFile());
+				
+				exec.chat(chat)
+				.command(
+						temp.getCompileLine().replace("{cfiledir}", 
+								compileFile.getParentFile().getAbsolutePath())
+						.replace("{cfile}", compileFile.getAbsolutePath())).execute();
 				
 				/*ShellCommand.exec(chat,
-						temp.getCompileLine().replace("{cfiledir}", compileFile.getParentFile().getAbsolutePath())
-						.replace("{cfile}", compileFile.getAbsolutePath()), 0, false, true);*/
+						, 0, false, true);*/
 			} else {
 				FileUtils.write(runFile, input, Charset.defaultCharset());
 			}

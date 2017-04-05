@@ -25,4 +25,6 @@ public interface BotChannel {
 	
 	public void sendFile(File file) throws Exception;
 	
+	public BotUser getUserByName(String name);
+	
 }
