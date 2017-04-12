@@ -1,6 +1,8 @@
 package org.mcsg.bot.command.commands;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
@@ -18,11 +20,32 @@ import lombok.Data;
 
 public class JavaCommand implements BotCommand{
 
+	private Map<String, CompileTemplate> temps = new HashMap<>();
+	
+	public JavaCommand() {
+		String jtemp = "https://gist.githubusercontent.com/Double0negative/37eb50e13e35596ca1ebfd29162def49/raw/d01a0a0a37fc9b32fbe8c850ed5a709a4696674b/template.java";
+		String jscript = "cd {dir} && javac -classpath \"../java_libs/*:\" {name}.java && java -classpath \"../java_libs/*:\" {name}";		
+		temps.put("java", new CompileTemplate(jtemp, jscript, "class ", ".java", ".class"));
+		
+		String cstemp = "https://gist.githubusercontent.com/Double0negative/9bd350556e6a026e0e469c98bff0627e/raw/128487cfd34b2a6e43809a9b925cdddb3a5c05c0/template.cs";
+		String csscript = "cd {dir} && mcs {name}.cs && mono {name}.exe";		
+		temps.put("cs", new CompileTemplate(cstemp, csscript, "class ", ".cs", ".exe"));
+	}
+	
+	
 	@Override
 	public void execute(String cmd, BotServer server, BotChannel chat, BotUser user, String[] args, String input)
 			throws Exception {
-		if (server.getBot().getPermissionManager().hasPermission(server, user, "code.java")) {
-			String templatelink = "https://gist.githubusercontent.com/Double0negative/37eb50e13e35596ca1ebfd29162def49/raw/7a37811331a8c7b254213368ff3b8ce9789265a5/template.java";
+		if (server.getBot().getPermissionManager().hasPermission(server, user, "code." + cmd)) {
+			
+			CompileTemplate temp = temps.get(cmd);
+			
+			if(temp == null) {
+				return;
+			}
+			
+			
+			String templatelink = temp.getTemplate();
 			String template = "";
 			String code = "";
 			long execap = 1000;
@@ -70,7 +93,7 @@ public class JavaCommand implements BotCommand{
 				code = code.replace("$imports", "");
 			}
 
-			if (server.getBot().getPermissionManager().hasPermission(server, user, "code.java.cap")) {
+			if (server.getBot().getPermissionManager().hasPermission(server, user, "code.exec.cap")) {
 				if (arge.hasSwitch("nolimit")) {
 					execap = 0;
 				} else if (arge.hasSwitch("limit")) {
@@ -78,36 +101,38 @@ public class JavaCommand implements BotCommand{
 				}
 			}
 
-			runCode(chat, user, code, execap, arge.hasSwitch("code"));
+			runCode(chat, user,temp, code,  execap, arge.hasSwitch("code"));
 
 		} else {
 			chat.sendMessage("No permission to execute command");
 		}
 
 	}
-	public void runCode(BotChannel chat, BotUser sender, String code, long cap, boolean b) throws Exception {
-		int cindex = code.indexOf("class") + "class ".length();
-		// chat.send(ChatManager.createPaste(cindex+" "+code.indexOf(" ",
-		// cindex)+"\n"+code));
+	public void runCode(BotChannel chat, BotUser sender, CompileTemplate temp,  String code, long cap, boolean b) throws Exception {
+		int cindex = code.indexOf(temp.getNameIdent()) + temp.getNameIdent().length();
+
+		
 		String name = code.substring(cindex, code.indexOf(" ", cindex)).trim();
 
-		File javaf = new File(chat.getServer().getBot().getSettings().getDataFolder(), name + ".java");
-		File javac = new File(chat.getServer().getBot().getSettings().getDataFolder(), name + ".class");
+		File javaf = new File(chat.getServer().getBot().getSettings().getDataFolder(), name + temp.getEext());
+		File javac = new File(chat.getServer().getBot().getSettings().getDataFolder(), name + temp.getCext());
 
-		FileUtils.writeFile(javaf, code);
+		FileUtils.writeFile(javac, code);
 
 		ShellExecutor exec = new ShellExecutor(chat.getServer().getBot());
 
 		exec.chat(chat);
 
-		exec.command("cd " + javac.getParentFile().getPath());
-		exec.command("javac -classpath \"../java_libs/*:\" " + name
-				+ ".java && java -classpath \"../java_libs/*:\" " + name);
+		String cmd = temp.getScript();
+		cmd = cmd.replace("{name}", name);
+		cmd = cmd.replace("{dir}",  javac.getParentFile().getPath());
+		
+		exec.command(cmd);
 
 		int id = exec.limit(cap).execute();
 
 		if (b)
-			chat.sendMessage( "Running java code. ID " + id + ". Code: " + GistAPI.paste("code.java", code));
+			chat.sendMessage( "Running code. ID " + id + ". Code: " + GistAPI.paste("code.java", code));
 
 		javaf.deleteOnExit();
 		javac.deleteOnExit();
@@ -140,7 +165,7 @@ public class JavaCommand implements BotCommand{
 
 	@Override
 	public String[] getCommand() {
-		return a("java");
+		return a("java", "cs");
 	}
 
 	@Override
@@ -155,10 +180,11 @@ public class JavaCommand implements BotCommand{
 		return null;
 	}
 	
-	private @Data @AllArgsConstructor class CompileTemplate {
+	protected @Data @AllArgsConstructor class CompileTemplate {
 		private String template;
-		private String compile;
-		private String execute;
+		private String script;
+		
+		private String nameIdent;
 		
 		private String cext, eext;
 	}
