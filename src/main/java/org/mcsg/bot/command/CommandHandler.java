@@ -12,6 +12,7 @@ import java.util.Scanner;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
+import org.mcsg.bot.api.WeatherCommand;
 import org.mcsg.bot.command.commands.ScriptCommand;
 import org.mcsg.bot.command.commands.GameCommand;
 import org.mcsg.bot.command.commands.HiCommand;
@@ -54,6 +55,7 @@ public class CommandHandler {
 		registerCommand(new JavaCommand());
 		registerCommand(new KillCommand());
 		registerCommand(new GameCommand());
+		registerCommand(new WeatherCommand());
 	}
 
 	public void executeCommand(String msg, BotChannel chat, BotUser user) {

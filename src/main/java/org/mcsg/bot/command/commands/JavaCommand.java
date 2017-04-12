@@ -13,6 +13,9 @@ import org.mcsg.bot.util.GistAPI;
 import org.mcsg.bot.util.StringUtils;
 import org.mcsg.bot.util.WebClient;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 public class JavaCommand implements BotCommand{
 
 	@Override
@@ -151,5 +154,14 @@ public class JavaCommand implements BotCommand{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private @Data @AllArgsConstructor class CompileTemplate {
+		private String template;
+		private String compile;
+		private String execute;
+		
+		private String cext, eext;
+	}
+	
 	
 }
