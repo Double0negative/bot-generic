@@ -132,7 +132,7 @@ public class CompiledCodeCommand implements BotCommand{
 		int id = exec.limit(cap).execute();
 
 		if (b)
-			chat.sendMessage( "Running code. ID " + id + ". Code: " + GistAPI.paste("code.java", code));
+			chat.sendMessage( "Running code. ID " + id + ". Code: " + GistAPI.paste("code" + temp.getCext(), code));
 
 		javaf.deleteOnExit();
 		javac.deleteOnExit();
