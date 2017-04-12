@@ -25,11 +25,11 @@ public class CompiledCodeCommand implements BotCommand{
 	public CompiledCodeCommand() {
 		String jtemp = "https://gist.githubusercontent.com/Double0negative/37eb50e13e35596ca1ebfd29162def49/raw/d01a0a0a37fc9b32fbe8c850ed5a709a4696674b/template.java";
 		String jscript = "cd {dir} && javac -classpath \"../java_libs/*:\" {name}.java && java -classpath \"../java_libs/*:\" {name}";		
-		temps.put("java", new CompileTemplate(jtemp, jscript, "class ", ".java", ".class"));
+		temps.put("java", new CompileTemplate(jtemp, jscript, "class ", "import", ".java", ".class"));
 		
 		String cstemp = "https://gist.githubusercontent.com/Double0negative/9bd350556e6a026e0e469c98bff0627e/raw/128487cfd34b2a6e43809a9b925cdddb3a5c05c0/template.cs";
 		String csscript = "cd {dir} && mcs {name}.cs && mono {name}.exe";		
-		temps.put("cs", new CompileTemplate(cstemp, csscript, "class ", ".cs", ".exe"));
+		temps.put("cs", new CompileTemplate(cstemp, csscript, "class ","using",  ".cs", ".exe"));
 	}
 	
 	
@@ -82,9 +82,9 @@ public class CompiledCodeCommand implements BotCommand{
 				StringBuilder sb = new StringBuilder();
 				for (String imp : split) {
 					if (imp.startsWith("s/")) {
-						sb.append("import static " + imp.substring(2) + ";");
+						sb.append(temp.getImportLabel() + " static " + imp.substring(2) + ";");
 					} else {
-						sb.append("import " + imp + ";");
+						sb.append(temp.getImportLabel() + " " + imp + ";");
 					}
 					sb.append("\n");
 				}
@@ -186,6 +186,7 @@ public class CompiledCodeCommand implements BotCommand{
 		
 		private String nameIdent;
 		
+		private String importLabel;
 		private String cext, eext;
 	}
 	
