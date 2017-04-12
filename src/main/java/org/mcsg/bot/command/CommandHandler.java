@@ -18,7 +18,7 @@ import org.mcsg.bot.command.commands.GameCommand;
 import org.mcsg.bot.command.commands.HiCommand;
 import org.mcsg.bot.command.commands.ImagePainterCommand;
 import org.mcsg.bot.command.commands.IsCommand;
-import org.mcsg.bot.command.commands.JavaCommand;
+import org.mcsg.bot.command.commands.CompiledCodeCommand;
 import org.mcsg.bot.command.commands.KillCommand;
 import org.mcsg.bot.command.commands.MusicBotCommand;
 import org.mcsg.bot.command.commands.PermissionCommand;
@@ -52,7 +52,7 @@ public class CommandHandler {
 		registerCommand(new SayCommand());
 		registerCommand(new PermissionCommand());
 		registerCommand(new StopCommand());
-		registerCommand(new JavaCommand());
+		registerCommand(new CompiledCodeCommand());
 		registerCommand(new KillCommand());
 		registerCommand(new GameCommand());
 		registerCommand(new WeatherCommand());

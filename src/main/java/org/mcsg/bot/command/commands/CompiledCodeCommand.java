@@ -18,11 +18,11 @@ import org.mcsg.bot.util.WebClient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-public class JavaCommand implements BotCommand{
+public class CompiledCodeCommand implements BotCommand{
 
 	private Map<String, CompileTemplate> temps = new HashMap<>();
 	
-	public JavaCommand() {
+	public CompiledCodeCommand() {
 		String jtemp = "https://gist.githubusercontent.com/Double0negative/37eb50e13e35596ca1ebfd29162def49/raw/d01a0a0a37fc9b32fbe8c850ed5a709a4696674b/template.java";
 		String jscript = "cd {dir} && javac -classpath \"../java_libs/*:\" {name}.java && java -classpath \"../java_libs/*:\" {name}";		
 		temps.put("java", new CompileTemplate(jtemp, jscript, "class ", ".java", ".class"));
