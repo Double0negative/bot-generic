@@ -47,10 +47,6 @@ public class PingCommand implements BotCommand {
         return a("ping");
     }
 
-	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
 
 	@Override
 	public String getPermission() {

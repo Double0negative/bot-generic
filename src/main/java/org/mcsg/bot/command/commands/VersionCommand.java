@@ -13,10 +13,7 @@ public class VersionCommand implements BotCommand {
 		chat.sendMessage(chat.getServer().getBot().getBrandingString());
 	}
 
-	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
+	
 
 	@Override
 	public String[] getCommand() {

@@ -83,10 +83,6 @@ public class WeatherCommand implements BotCommand{
 		return "weather";
 	}
 
-	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
 
 	@Override
 	public String[] getCommand() {

@@ -20,10 +20,7 @@ public class QueueTestCommand implements BotCommand{
 		msg.edit("Cleared");
 	}
 
-	@Override
-	public String[] getPrefix() {
-		return a(",");
-	}
+
 
 	@Override
 	public String[] getCommand() {

@@ -80,10 +80,7 @@ public class GameCommand implements BotCommand{
 		return "game";
 	}
 
-	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
+
 
 	@Override
 	public String[] getCommand() {

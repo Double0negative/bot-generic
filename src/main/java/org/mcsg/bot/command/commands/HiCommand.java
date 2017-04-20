@@ -34,10 +34,7 @@ public class HiCommand implements BotCommand {
 
 
 
-	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
+	
 
 	@Override
 	public String getPermission() {

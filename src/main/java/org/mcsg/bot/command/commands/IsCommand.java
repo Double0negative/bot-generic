@@ -40,10 +40,6 @@ public class IsCommand implements BotCommand {
 
 
 
-	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
 
 
 

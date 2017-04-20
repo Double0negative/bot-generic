@@ -22,11 +22,6 @@ public class KillCommand implements BotCommand {
 	}
 
 	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
-
-	@Override
 	public String[] getCommand() {
 		return a("kill");
 	}

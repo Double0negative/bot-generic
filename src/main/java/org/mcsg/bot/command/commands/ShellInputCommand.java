@@ -24,10 +24,6 @@ public class ShellInputCommand implements BotCommand {
 		exec.writeTo(StringUtils.implode(copy));
 	}
 
-	@Override
-	public String[] getPrefix() {
-		return a(".") ;
-	}
 
 	@Override
 	public String[] getCommand() {

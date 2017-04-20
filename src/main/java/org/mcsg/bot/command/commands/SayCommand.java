@@ -17,10 +17,6 @@ public class SayCommand implements BotCommand{
 		chan.sendMessage(StringUtils.implode(args).replace(args[0], ""));
 	}
 
-	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
 
 	@Override
 	public String[] getCommand() {

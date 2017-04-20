@@ -162,11 +162,6 @@ public class CompiledCodeCommand implements BotCommand{
 	}
 
 	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
-
-	@Override
 	public String[] getCommand() {
 		return a("java", "cs");
 	}

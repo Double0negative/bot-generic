@@ -23,11 +23,6 @@ public class StopCommand implements BotCommand{
 	}
 
 	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
-
-	@Override
 	public String[] getCommand() {
 		return a("stop");
 	}

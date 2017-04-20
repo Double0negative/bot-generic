@@ -20,11 +20,6 @@ public class ShellCommand implements BotCommand{
 	}
 
 	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
-
-	@Override
 	public String[] getCommand() {
 		return a("sh", "shell");
 	}

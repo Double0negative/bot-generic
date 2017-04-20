@@ -144,10 +144,6 @@ public class ImagePainterCommand implements BotCommand{
 
 	}
 
-	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
 
 	@Override
 	public String[] getCommand() {

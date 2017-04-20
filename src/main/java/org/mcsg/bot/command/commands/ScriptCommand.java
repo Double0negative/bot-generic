@@ -65,10 +65,7 @@ public class ScriptCommand implements BotCommand{
 
 	}
 
-	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
+	
 
 	@Override
 	public String[] getCommand() {

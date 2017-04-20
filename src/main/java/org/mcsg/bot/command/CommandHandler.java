@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.mcsg.bot.api.Bot;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
@@ -34,10 +35,15 @@ import org.mcsg.bot.util.StringUtils;
 
 public class CommandHandler {
 
+	Bot bot;
+	String[] prefixes;
 	Map<String, BotCommand> commands = new HashMap<>();
 	Map<String, BotCommand> raw = new HashMap<>();
 
-	public CommandHandler() {
+	public CommandHandler(Bot bot) {
+		this.bot = bot;
+		prefixes = ((List<String>)bot.getSettings().getList("bot.prefixes")).toArray(new String[0]);
+		
 		registerCommand(new RandomNumberCommand());
 		registerCommand(new IsCommand());
 		registerCommand(new QueueTestCommand());
@@ -73,7 +79,7 @@ public class CommandHandler {
 				async(() -> {
 					try {
 						if(command.getPermission() == null || chat.getServer().getBot().getPermissionManager().hasPermission(chat.getServer(), user, command.getPermission() + ".use")){
-							command.execute(StringUtils.replaceAll(split[0], "", command.getPrefix()), chat.getServer(), chat , user, getArgs(split), input);
+							command.execute(StringUtils.replaceAll(split[0], "", prefixes), chat.getServer(), chat , user, getArgs(split), input);
 						} else {
 							chat.sendMessage("("+user.getUsername() + ") You do not have permission to use " + split[0]);
 						}
@@ -86,7 +92,7 @@ public class CommandHandler {
 	}
 
 	public void registerCommand(BotCommand command) {
-		for(String pre : command.getPrefix()) {
+		for(String pre : prefixes) {
 			for(String cmd : command.getCommand()) {
 				raw.put(cmd,  command);
 				commands.put(pre + cmd, command);
@@ -95,7 +101,7 @@ public class CommandHandler {
 	}
 
 	public void unregisterCommand(BotCommand command) {
-		for(String pre : command.getPrefix()) {
+		for(String pre : prefixes) {
 			for(String cmd : command.getCommand()) {
 				raw.remove(cmd);
 				commands.remove(pre + cmd);

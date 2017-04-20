@@ -13,8 +13,7 @@ public abstract class GenericBot implements Bot{
 	
 	public GenericBot() {
 		this.settings = new GenericSettings();
-		this.handler = new CommandHandler();
-		
+		this.handler = new CommandHandler(this);
 	}
 	
 

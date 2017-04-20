@@ -43,10 +43,6 @@ public class RandomNumberCommand implements BotCommand{
         return ".rand [type]";
     }
 
-	@Override
-	public String[] getPrefix() {
-		return a(".");
-	}
 
 	@Override
 	public String[] getCommand() {
