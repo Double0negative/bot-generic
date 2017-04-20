@@ -9,6 +9,8 @@ public interface BotSettings {
 	
 	public File getDataFolder();
 	
+	public File getPluginsFolder();
+	
 	public Object get(String setting);
 
 	public String getString(String setting) ;

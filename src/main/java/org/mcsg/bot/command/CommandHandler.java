@@ -12,7 +12,6 @@ import java.util.Scanner;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotUser;
-import org.mcsg.bot.api.WeatherCommand;
 import org.mcsg.bot.command.commands.ScriptCommand;
 import org.mcsg.bot.command.commands.GameCommand;
 import org.mcsg.bot.command.commands.HiCommand;
@@ -30,6 +29,7 @@ import org.mcsg.bot.command.commands.ShellCommand;
 import org.mcsg.bot.command.commands.ShellInputCommand;
 import org.mcsg.bot.command.commands.StopCommand;
 import org.mcsg.bot.command.commands.VersionCommand;
+import org.mcsg.bot.command.commands.WeatherCommand;
 import org.mcsg.bot.util.StringUtils;
 
 public class CommandHandler {
@@ -59,7 +59,8 @@ public class CommandHandler {
 	}
 
 	public void executeCommand(String msg, BotChannel chat, BotUser user) {
-		String[] split = msg.split("\\s+");
+		//String[] split = msg.split("\\s+");
+		String[] split = msg.split(" ");
 
 		Arrays.toString(split);
 

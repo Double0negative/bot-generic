@@ -10,24 +10,39 @@ import org.mcsg.bot.api.BotSentMessage;
 public class DelayedActionMessage {
 
 	private final ScheduledExecutorService scheduler =
-		     Executors.newSingleThreadScheduledExecutor();
-	
+			Executors.newSingleThreadScheduledExecutor();
+
 	private BotSentMessage sent;
 	private BotChannel chat;
 	private String msg;
-	
+
 	private boolean updating;
 	private boolean first = true;
-	
+
 	public DelayedActionMessage(BotChannel chat) {
 		this.chat = chat;
 	}
-	
-	public void setMessage(String msg) {
+
+	public DelayedActionMessage append(String msg) {
+		if(this.msg != null) {
+			if(checkNew(msg)) {
+				DelayedActionMessage delayed  = new DelayedActionMessage(chat);
+				delayed.append(msg);
+				return delayed;
+			}
+			String message = this.msg + "\n" + msg;
+			set(message);
+		}else {
+			set(msg);
+		}
+		return this;
+	}
+
+	public void set(String msg) {
 		this.msg = msg;
 		update();
 	}
-	
+
 	private void update() {
 		if(updating) {
 			return;
@@ -44,4 +59,8 @@ public class DelayedActionMessage {
 		first = false;
 	}
 	
+	public boolean checkNew(String msg) {
+		return (this.msg + msg).length() > 2000;
+	}
+
 }

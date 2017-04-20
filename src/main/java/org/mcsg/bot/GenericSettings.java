@@ -158,5 +158,16 @@ public class GenericSettings implements BotSettings{
 
 
 
+	@Override
+	public File getPluginsFolder() {
+		File settings = new File("plugins/");
+		if(!settings.exists()) {
+			settings.mkdir();
+		}
+		return settings;
+	}
+
+
+
 
 }

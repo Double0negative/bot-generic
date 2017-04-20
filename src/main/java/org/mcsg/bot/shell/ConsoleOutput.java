@@ -41,6 +41,6 @@ public class ConsoleOutput {
 		}
 		builder.append(enclose);
 		
-		this.msg.setMessage(builder.toString());
+		this.msg.set(builder.toString());
 	}
 }

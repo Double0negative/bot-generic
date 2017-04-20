@@ -1,7 +1,11 @@
-package org.mcsg.bot.api;
+package org.mcsg.bot.command.commands;
 
 import java.io.IOException;
 
+import org.mcsg.bot.api.BotChannel;
+import org.mcsg.bot.api.BotCommand;
+import org.mcsg.bot.api.BotServer;
+import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.util.Arguments;
 import org.mcsg.bot.util.StringUtils;
 import org.mcsg.bot.util.WebClient;
@@ -25,12 +29,18 @@ public class WeatherCommand implements BotCommand{
 		input = StringUtils.implode(arge.getArgs());
 
 		if(args.length > 0) {
-			String key = server.getBot().getSettings().getString("wundergroud.apikey");
+			String key = server.getBot().getSettings().getString("wunderground.apikey");
 
-			if(arge.hasSwitch("hourly")) {
-				
+			if(key == null) {
+				chat.sendError("API Key not set!");
+				return;
 			}
 			
+			/*if(arge.hasSwitch("hourly")) {
+				
+			}*/
+			
+		
 			JsonNode node = WebClient.getJson(StringUtils.replaceVars(CONDITIONS, key, input));
 			JsonNode current = node.get("current_observation");
 			JsonNode location = current.get("display_location");

@@ -36,6 +36,7 @@ public class CompiledCodeCommand implements BotCommand{
 	@Override
 	public void execute(String cmd, BotServer server, BotChannel chat, BotUser user, String[] args, String input)
 			throws Exception {
+		System.out.println(input);
 		if (server.getBot().getPermissionManager().hasPermission(server, user, "code." + cmd)) {
 			
 			CompileTemplate temp = temps.get(cmd);
@@ -55,6 +56,8 @@ public class CompiledCodeCommand implements BotCommand{
 			args = arge.getArgs();
 
 			input = StringUtils.implode(arge.getArgs());
+			
+			System.out.println(input);
 
 
 			if (arge.hasSwitch("paste")) {

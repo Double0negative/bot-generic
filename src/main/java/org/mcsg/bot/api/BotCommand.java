@@ -13,7 +13,7 @@ public interface BotCommand {
 
     public String getPermission();
     
-    public String[] getPrefix();
+ 
     
     /**
      * Get the command name, this is what will be used as the command
