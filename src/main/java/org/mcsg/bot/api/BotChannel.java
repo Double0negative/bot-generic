@@ -11,6 +11,8 @@ public interface BotChannel {
 	
 	public BotServer getServer();
 	
+	public List<BotSentMessage> getMessages();
+	
 	public List<BotUser> getUsers();
 	
 	public BotSentMessage sendMessage(String msg);
@@ -26,5 +28,7 @@ public interface BotChannel {
 	public void sendFile(File file) throws Exception;
 	
 	public BotUser getUserByName(String name);
+	
+	public void clear();
 	
 }

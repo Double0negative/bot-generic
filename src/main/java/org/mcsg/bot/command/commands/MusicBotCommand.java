@@ -14,7 +14,7 @@ import org.mcsg.bot.util.StringUtils;
 
 public class MusicBotCommand implements BotCommand{
 
-	private static final String YT_DOWNLOAD = "youtube-dl --audio-format mp3 --extract-audio -o \"{0}/music_{1}.%(etx)s\"  \"{2}\"";
+	private static final String YT_DOWNLOAD = "youtube-dl --default-search auto --audio-format mp3 --extract-audio -o \"{0}/music_{1}.%(etx)s\"  \"{2}\"";
 	private static final AtomicInteger id = new AtomicInteger(0);
 	
 	@Override
@@ -28,9 +28,7 @@ public class MusicBotCommand implements BotCommand{
 					channel.play();
 					return;
 				}
-				
-				//probably not the most secure thing ever..
-				
+								
 				int i = id.getAndIncrement();
 				
 				ShellExecutor exec = new ShellExecutor(chat.getServer().getBot());

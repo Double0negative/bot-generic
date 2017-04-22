@@ -76,6 +76,7 @@ public class CommandHandler {
 			split[0] = split[0].toLowerCase();
 			BotCommand command = commands.get(split[0]);
 			if(command != null) {
+				System.out.println(chat.getName() + "-" + user.getUsername() + ":" + split[0]);
 				async(() -> {
 					try {
 						if(command.getPermission() == null || chat.getServer().getBot().getPermissionManager().hasPermission(chat.getServer(), user, command.getPermission() + ".use")){
@@ -85,6 +86,7 @@ public class CommandHandler {
 						}
 					} catch (Exception e) {
 						chat.sendThrowable(e);
+						e.printStackTrace();
 					}
 				});
 			}
