@@ -9,6 +9,8 @@ public interface BotServer {
 	public String getName();
 	
 	public Bot getBot();
+	
+	public BotUser getUserByName(String name);
 
 	public List<BotChannel> getChats();
 	

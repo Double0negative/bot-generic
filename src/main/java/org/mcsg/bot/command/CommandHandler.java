@@ -43,7 +43,7 @@ public class CommandHandler {
 	public CommandHandler(Bot bot) {
 		this.bot = bot;
 		prefixes = ((List<String>)bot.getSettings().getList("bot.prefixes")).toArray(new String[0]);
-		
+
 		registerCommand(new RandomNumberCommand());
 		registerCommand(new IsCommand());
 		registerCommand(new QueueTestCommand());
@@ -85,7 +85,10 @@ public class CommandHandler {
 							chat.sendMessage("("+user.getUsername() + ") You do not have permission to use " + split[0]);
 						}
 					} catch (Exception e) {
-						chat.sendThrowable(e);
+						if(!bot.getSettings().getBoolean("bot.production", false))
+							chat.sendThrowable(e);
+						else
+							chat.sendMessage("An error occured while executing this command");
 						e.printStackTrace();
 					}
 				});
@@ -110,11 +113,11 @@ public class CommandHandler {
 			}
 		}
 	}
-	
+
 	private BotCommand getCommand(String cmd) {
 		return commands.get(cmd);
 	}
-	
+
 	public BotCommand getRawCommand(String cmd) {
 		return raw.get(cmd);
 	}

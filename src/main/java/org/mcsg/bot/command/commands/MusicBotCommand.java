@@ -22,24 +22,13 @@ public class MusicBotCommand implements BotCommand{
 		Bot bot = server.getBot();
 		BotVoiceChannel voice = chat.getServer().getBot().getVoiceChannel(chat);
 		if(voice != null) {
-			if(cmd.contains("play")) {
-				if(args.length == 0) {
-					BotVoiceChannel channel = bot.getVoiceChannel(chat);
-					channel.play();
-					return;
-				}
-								
-				int i = id.getAndIncrement();
-				
-				ShellExecutor exec = new ShellExecutor(chat.getServer().getBot());
-				exec.command(StringUtils.replaceVars(YT_DOWNLOAD, bot.getSettings().getDataFolder(), i, args[0]));
-				exec.execute();
-				exec.waitFor();
-				
-				
-				
+			if(cmd.equalsIgnoreCase("resume")) {
 				BotVoiceChannel channel = bot.getVoiceChannel(chat);
-				channel.queueFile(new File(bot.getSettings().getDataFolder(), "music_" + i + ".mp3"));
+				channel.resume();
+			}
+			if(cmd.contains("play")) {
+				BotVoiceChannel channel = bot.getVoiceChannel(chat);
+				channel.play(input);
 			} else if(cmd.contains("pause")) {
 				BotVoiceChannel channel = bot.getVoiceChannel(chat);
 				channel.pause();
@@ -56,7 +45,7 @@ public class MusicBotCommand implements BotCommand{
 
 	@Override
 	public String[] getCommand() {
-		return a("play", "pause", "skip");
+		return a("play", "pause", "skip", "resume");
 	}
 
 	@Override
