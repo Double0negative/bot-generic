@@ -39,10 +39,15 @@ public class CommandHandler {
 	String[] prefixes;
 	Map<String, BotCommand> commands = new HashMap<>();
 	Map<String, BotCommand> raw = new HashMap<>();
+	
+	List<String> disabled = new ArrayList<>();
+	List<String> enabled = new ArrayList<>();
 
 	public CommandHandler(Bot bot) {
 		this.bot = bot;
 		prefixes = ((List<String>)bot.getSettings().getList("bot.prefixes")).toArray(new String[0]);
+		enabled = ((List<String>)bot.getSettings().getList("bot.commands.enabled"));
+		disabled = ((List<String>)bot.getSettings().getList("bot.commands.disabled"));
 
 		registerCommand(new RandomNumberCommand());
 		registerCommand(new IsCommand());
@@ -99,8 +104,12 @@ public class CommandHandler {
 	public void registerCommand(BotCommand command) {
 		for(String pre : prefixes) {
 			for(String cmd : command.getCommand()) {
-				raw.put(cmd,  command);
-				commands.put(pre + cmd, command);
+				if(disabled == null || !disabled.contains(cmd)){
+					if(enabled == null || enabled.contains(cmd) ) {
+						raw.put(cmd,  command);
+						commands.put(pre + cmd, command);
+					}
+				}
 			}
 		}
 	}

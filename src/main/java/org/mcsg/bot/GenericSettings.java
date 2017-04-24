@@ -107,8 +107,6 @@ public class GenericSettings implements BotSettings{
 		Object o = get(setting);
 		if(o instanceof List) {
 			return (List)o;
-		} else {
-			System.out.println(o.getClass());
 		}
 		return null;
 	}
