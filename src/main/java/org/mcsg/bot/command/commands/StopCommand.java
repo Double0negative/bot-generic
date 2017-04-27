@@ -19,7 +19,7 @@ public class StopCommand implements BotCommand{
 
 	@Override
 	public String getPermission() {
-		return "stop";
+		return "shutdown";
 	}
 
 	@Override
