@@ -10,6 +10,8 @@ public interface Bot {
 	
 	public BotUser getUser(String id);
 	
+	public void setStatus(String status);
+		
 	public BotChannel getChat(String id);
 	
 	public BotServer getServer(String id);

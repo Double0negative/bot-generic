@@ -30,7 +30,6 @@ import org.mcsg.bot.command.commands.ShellCommand;
 import org.mcsg.bot.command.commands.ShellInputCommand;
 import org.mcsg.bot.command.commands.StopCommand;
 import org.mcsg.bot.command.commands.VersionCommand;
-import org.mcsg.bot.command.commands.WeatherCommand;
 import org.mcsg.bot.util.StringUtils;
 
 public class CommandHandler {
@@ -66,7 +65,6 @@ public class CommandHandler {
 		registerCommand(new CompiledCodeCommand());
 		registerCommand(new KillCommand());
 		registerCommand(new GameCommand());
-		registerCommand(new WeatherCommand());
 	}
 
 	public void executeCommand(String msg, BotChannel chat, BotUser user) {
