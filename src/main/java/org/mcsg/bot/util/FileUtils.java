@@ -45,7 +45,9 @@ public class FileUtils {
     }
 
     public static File createTempFile(String name) {
-        return new File("files", name);
+        File file =  new File("files", name);
+        file.deleteOnExit();
+        return file;
     }
 
 }
