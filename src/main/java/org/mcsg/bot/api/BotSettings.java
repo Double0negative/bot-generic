@@ -2,6 +2,7 @@ package org.mcsg.bot.api;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 public interface BotSettings {
 	
@@ -24,5 +25,7 @@ public interface BotSettings {
 	public List getList(String setting);
 	
 	public void set(String setting, Object val);
+	
+	public Map getMap(String setting);
 	
 }

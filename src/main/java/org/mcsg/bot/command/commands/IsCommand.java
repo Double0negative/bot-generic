@@ -13,7 +13,7 @@ public class IsCommand implements BotCommand {
 
     @Override
     public void execute(String cmd, BotServer server,  BotChannel chat, BotUser sender, String[] args, String input) throws Exception {
-        if (new Random(StringUtils.implode(args).toLowerCase().hashCode()).nextBoolean()) {
+        if (new Random(StringUtils.implode(args).toLowerCase().hashCode() + sender.getId().hashCode()).nextBoolean()) {
             chat.sendMessage("Yes");
         } else {
             chat.sendMessage("No");

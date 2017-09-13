@@ -110,6 +110,15 @@ public class GenericSettings implements BotSettings{
 		}
 		return null;
 	}
+	
+	@Override
+	public  Map getMap(String setting) {
+		Object o = get(setting);
+		if(o instanceof Map) {
+			return (Map)o;
+		}
+		return null;
+	}
 
 	@Override
 	public void set(String setting, Object val) {
