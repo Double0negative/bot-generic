@@ -23,6 +23,7 @@ import org.mcsg.bot.command.commands.KillCommand;
 import org.mcsg.bot.command.commands.MusicBotCommand;
 import org.mcsg.bot.command.commands.PermissionCommand;
 import org.mcsg.bot.command.commands.PingCommand;
+import org.mcsg.bot.command.commands.ProfilerCommand;
 import org.mcsg.bot.command.commands.QueueTestCommand;
 import org.mcsg.bot.command.commands.RandomNumberCommand;
 import org.mcsg.bot.command.commands.SayCommand;
@@ -30,6 +31,8 @@ import org.mcsg.bot.command.commands.ShellCommand;
 import org.mcsg.bot.command.commands.ShellInputCommand;
 import org.mcsg.bot.command.commands.StopCommand;
 import org.mcsg.bot.command.commands.VersionCommand;
+import org.mcsg.bot.profiler.ProfileInstance;
+import org.mcsg.bot.profiler.Profiler;
 import org.mcsg.bot.util.StringUtils;
 
 public class CommandHandler {
@@ -65,13 +68,15 @@ public class CommandHandler {
 		registerCommand(new CompiledCodeCommand());
 		registerCommand(new KillCommand());
 		registerCommand(new GameCommand());
+		registerCommand(new ProfilerCommand());
 	}
 
 	public void executeCommand(String msg, BotChannel chat, BotUser user) {
 		//String[] split = msg.split("\\s+");
 		String[] split = msg.split(" ");
 
-		Arrays.toString(split);
+		ProfileInstance profileInstance = new ProfileInstance(msg, user, chat.getServer());
+		Profiler.get().addInstance(profileInstance);
 
 		final String input = msg.substring(msg.indexOf(" ") + 1);
 
@@ -81,11 +86,15 @@ public class CommandHandler {
 			if(command != null) {
 				System.out.println(chat.getName() + "-" + user.getUsername() + ":" + split[0]);
 				async(() -> {
+					String cmd = StringUtils.replaceAll(split[0], "", prefixes);
+
 					try {
 						if(command.getPermission() == null || chat.getServer().getBot().getPermissionManager().hasPermission(chat.getServer(), user, command.getPermission() + ".use")){
-							command.execute(StringUtils.replaceAll(split[0], "", prefixes), chat.getServer(), chat , user, getArgs(split), input);
+							command.execute(cmd, chat.getServer(), chat , user, getArgs(split), input);
+							profileInstance.setCommandCompleted(cmd, true, false);
 						} else {
 							chat.sendMessage("("+user.getUsername() + ") You do not have permission to use " + split[0]);
+							profileInstance.setCommandCompleted(cmd, false, false);
 						}
 					} catch (Exception e) {
 						if(!bot.getSettings().getBoolean("bot.production", false))
@@ -93,6 +102,7 @@ public class CommandHandler {
 						else
 							chat.sendMessage("An error occured while executing this command");
 						e.printStackTrace();
+						profileInstance.setCommandCompleted(cmd, false, true);
 					}
 				});
 			}
