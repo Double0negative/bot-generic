@@ -10,8 +10,15 @@ public interface Filter {
 
 	public BufferedImage filter(BufferedImage input,  Graphics2D g, MapWrapper map);
 	
-	public default BufferedImage blank(BufferedImage img) {
+	public default BufferedImage transparent(BufferedImage img) {
 		BufferedImage output = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		
+		return output;
+	}
+	
+	
+	public default BufferedImage blank(BufferedImage img) {
+		BufferedImage output = transparent(img);
 		
 		Graphics2D g = (Graphics2D)output.getGraphics();
 		

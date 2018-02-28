@@ -12,6 +12,7 @@ public class StopCommand implements BotCommand{
 			throws Exception {
 		
 		chat.sendMessage("Stopping bot..");
+		server.getBot().log("System", "Shutdown started by " + user.getUsername());
 		
 		server.getBot().stop();
 		

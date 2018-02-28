@@ -15,6 +15,8 @@ public interface BotChannel {
 	
 	public List<BotUser> getUsers();
 	
+	public BotSentMessage debug(String msg);
+	
 	public BotSentMessage sendMessage(String msg);
 	
 	public void queueMessage(String msg);

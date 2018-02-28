@@ -5,25 +5,28 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import org.mcsg.bot.api.Bot;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotServer;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.drawing.AbstractPainter;
 import org.mcsg.bot.drawing.Filter;
-import org.mcsg.bot.drawing.Painter;
-import org.mcsg.bot.drawing.filter.Distort;
+import org.mcsg.bot.drawing.filter.Bloom2;
+import org.mcsg.bot.drawing.filter.ChromaticAberration;
+import org.mcsg.bot.drawing.filter.Distort_;
 import org.mcsg.bot.drawing.filter.Edge;
-import org.mcsg.bot.drawing.filter.Smoosh_;
+import org.mcsg.bot.drawing.filter.Warp;
 import org.mcsg.bot.drawing.filter.Pixelate;
+import org.mcsg.bot.drawing.filter.ScanLines;
 import org.mcsg.bot.drawing.filter.Smoosh;
 import org.mcsg.bot.drawing.painters.AbstractShapes;
 import org.mcsg.bot.drawing.painters.Circles;
@@ -63,9 +66,13 @@ public class ImagePainterCommand implements BotCommand{
 		this.painters.put("empty", Empty.class);
 
 		this.filters.put("pixel", Pixelate.class);
-		this.filters.put("distort", Distort.class);
+		this.filters.put("distort", Distort_.class);
 		this.filters.put("smoosh", Smoosh.class);
 		this.filters.put("edge", Edge.class);
+		this.filters.put("ab",ChromaticAberration.class);
+		this.filters.put("warp",Warp.class);
+		this.filters.put("scanlines",ScanLines.class);
+		this.filters.put("bloom2",Bloom2.class);
 
 	}
 
@@ -73,19 +80,22 @@ public class ImagePainterCommand implements BotCommand{
 	public void execute(String cmd,  BotServer server, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
 		Arguments arge = new Arguments(args, "background/bg arg", "resolution/res arg", "filter arg", "import arg");
 
-		String genName = getRandomKey(painters);
-		Class<? extends AbstractPainter> generator = this.painters.get(genName);
+		String randGen = getRandomKey(painters);
+		List<String> generators = new ArrayList<>();
 
-		System.out.println(Arrays.toString(arge.getArgs()));
+		boolean set = false;
 		if(arge.getArgs().length > 0) {
-			generator = this.painters.get(arge.getArgs()[0]);
+			generators.addAll(Arrays.asList(arge.getArgs()[0].split(",")));
+
 		}
 
-		int width = 1920;
+		int width = 1920; 
 		int height = 1080;
+		
+		System.out.println(arge.getSwitches());
 
-		if(arge.getSwitches().containsKey("res")) {
-			String res = arge.getSwitch("res");
+		if(arge.hasSwitch("resolution")) {
+			String res = arge.getSwitch("resolution");
 
 			width = Integer.parseInt(res.split("x")[0]);
 			height = Integer.parseInt(res.split("x")[1]);
@@ -95,15 +105,17 @@ public class ImagePainterCommand implements BotCommand{
 
 		if(arge.hasSwitch("import")) {
 			img = ImageIO.read(new URL(arge.getSwitch("import")));
+			if(generators.size() == 0) {
+				generators.add("empty");
+			}
 		}
 
 		if(img == null){
 			img = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 		}
 		System.out.println(img);
-		System.out.println(generator);
+		System.out.println(generators);
 
-		AbstractPainter painter = generator.getConstructor(BufferedImage.class).newInstance(img);
 
 		final MapWrapper wrap = new MapWrapper();
 		for(String arg : args){
@@ -122,12 +134,19 @@ public class ImagePainterCommand implements BotCommand{
 		}
 
 		if(!arge.hasSwitch("import"))
-			painter.setBackground(bg);
-		painter.paint(wrap);
+			setBackground(img, bg);
+		
+		for(String gen : generators) {
+			Class<? extends AbstractPainter> generator = painters.get(gen);
+			if(generator != null) {
+				AbstractPainter painter = generator.getConstructor(BufferedImage.class).newInstance(img);
+				painter.paint(wrap);
+			}
+		}
 
 		if(arge.getSwitches().containsKey("filter")) {
 			for(String fstr : arge.getSwitches().get("filter").split(",")) {
-				
+
 				Class<? extends Filter> fClass = filters.get(fstr);
 				if(fClass != null){
 					Filter filter = fClass.newInstance();
@@ -137,10 +156,22 @@ public class ImagePainterCommand implements BotCommand{
 		}
 
 
-		File file = new File(chat.getServer().getBot().getSettings().getDataFolder(), genName + "_" + System.currentTimeMillis() + ".png");
+		File file = new File(chat.getServer().getBot().getSettings().getDataFolder(), "painter_" + System.currentTimeMillis() + ".png");
 		ImageIO.write(img, "png",file);
 
 		chat.sendFile(file);
+
+	}
+
+	private void setBackground(BufferedImage img, Color color) {
+		Graphics2D g = (Graphics2D)img.getGraphics();
+		Color bcolor = g.getColor();
+
+		g.setColor(color);
+		g.fillRect(0, 0, img.getWidth(),img.getHeight());
+
+		g.setColor(bcolor);
+
 
 	}
 

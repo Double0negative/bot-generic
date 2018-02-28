@@ -27,7 +27,7 @@ public class PluginManager {
 					PluginMetaData data = loader.load();
 
 					plugins.put(data.getName(), data);
-					bot.log("Loaded plugin " + data.getName() + ":" + data.getVersion());
+					bot.log("PluginManager", "Loaded plugin " + data.getName() + ":" + data.getVersion());
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 					bot.err("Could not load plugin " + file.getPath() + ", Could not load main class " + e.getMessage());

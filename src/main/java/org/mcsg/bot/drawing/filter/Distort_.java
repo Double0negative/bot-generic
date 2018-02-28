@@ -10,7 +10,7 @@ import org.mcsg.bot.drawing.Filter;
 import org.mcsg.bot.drawing.filter.Pixelate.PixelData;
 import org.mcsg.bot.util.MapWrapper;
 
-public class Distort implements Filter{
+public class Distort_ implements Filter{
 
 	@Override
 	public BufferedImage filter(BufferedImage img, Graphics2D g, MapWrapper map) {

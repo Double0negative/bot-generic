@@ -1,6 +1,7 @@
 package org.mcsg.bot.util;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -18,8 +19,6 @@ public class WebClient {
 	}
 	
 	public static JsonNode getJson(String url) throws JsonProcessingException, IOException, UnirestException {
-		System.out.println("GET " + url);
-
 		String json = get(url);
 		return mapper.readTree(json);
 	}
