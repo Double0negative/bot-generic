@@ -54,9 +54,10 @@ public class C4MiniMaxAi implements TileAi{
 			Tile[][] current = game.clone2DArray(tiles);
 
 			int row = game.getRow(tiles, a, 0);
-			current[a][row] = aiPlayer.getTile();
 
 			if (row != -1) {
+				current[a][row] = aiPlayer.getTile();
+
 				int value = alphabet(current, true, MAX_DEPTH);
 
 				if (!results.containsKey(value))
@@ -64,27 +65,37 @@ public class C4MiniMaxAi implements TileAi{
 			}
 
 		}
-		int move = results.lastEntry().getValue();
+		int move = results.firstEntry().getValue();
 
-		chat.sendMessage(results.toString());
+//		chat.sendMessage(results.toString());
 
 		return new String[] {Integer.toString(move + 1)};
 
 	}
 	private int alphabet(Tile[][] tiles, boolean max, int depth) {
+
+
 		boolean aiwin = game.checkForVictory(aiPlayer.getTile(), tiles);
 		boolean owin = game.checkForVictory(otherPlayer.getTile(), tiles);
 
-		if(aiwin || owin)
-			System.out.println("AI: " + aiwin + "  owin:" + owin);
-		
+//		if(aiwin || owin)
+//			System.out.println("AI: " + aiwin + "  owin:" + owin);
+//		
 		if (aiwin )
-			return MAX_VALUE;
+			return -MAX_VALUE;
 		else if (owin)
 			return MAX_VALUE;
 
 		if (depth <= 0) {
 			// ChatManager.chat(chat, "Score: "+getScore(tiles));
+//			System.out.println();
+//			for (int c = 0; c < tiles[0].length; c++) {
+//				System.out.print("[");
+//				for (int b = 0; b < tiles.length; b++) {
+//					System.out.print(tiles[b][c] + ",");
+//				}
+//				System.out.println("] ");
+//			}
 			return getScore(tiles);
 		}
 
@@ -97,6 +108,8 @@ public class C4MiniMaxAi implements TileAi{
 					value = Math.max(value, alphabet(tiles, false, depth - 1));
 					tiles[a][row] = null;
 				}
+//				System.out.println("max " +a + " : " +  value);
+
 			}
 			return value;
 		} else {
@@ -108,7 +121,10 @@ public class C4MiniMaxAi implements TileAi{
 					value = Math.min(value, alphabet(tiles, true,depth - 1));
 					tiles[a][row] = null;
 				}
+//				System.out.println("max " +a + " : " +  value);
+
 			}
+
 			return value;
 		}
 	}

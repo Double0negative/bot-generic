@@ -17,4 +17,8 @@ public enum Tile {
 	public String getSymbol() {
 		return symbol;
 	}
+	
+	public String toString() {
+		return this.symbol;
+	}
 }

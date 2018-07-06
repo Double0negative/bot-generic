@@ -38,8 +38,8 @@ public class AbstractShapes extends AbstractPainter{
 
 	private Point drawRandomShape(Point point){
 		int size = 3;
-		while(rand.nextInt(10) > 2)
-			size++;
+//		while(rand.nextInt(10) > 2)
+//			size++;
 		int xcor [] = new int[size];
 		int ycor [] = new int[size];
 

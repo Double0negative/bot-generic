@@ -1,6 +1,7 @@
 package org.mcsg.bot.command.commands;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,6 +14,8 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
@@ -31,13 +34,16 @@ import org.mcsg.bot.drawing.filter.Smoosh;
 import org.mcsg.bot.drawing.painters.AbstractShapes;
 import org.mcsg.bot.drawing.painters.Circles;
 import org.mcsg.bot.drawing.painters.Clusters;
+import org.mcsg.bot.drawing.painters.Curves;
 import org.mcsg.bot.drawing.painters.DotLines;
 import org.mcsg.bot.drawing.painters.Dots;
 import org.mcsg.bot.drawing.painters.Empty;
+import org.mcsg.bot.drawing.painters.Fireworks;
 import org.mcsg.bot.drawing.painters.Landscape;
 import org.mcsg.bot.drawing.painters.Lines;
 import org.mcsg.bot.drawing.painters.BasicShapes;
 import org.mcsg.bot.drawing.painters.Smoke;
+import org.mcsg.bot.drawing.painters.Smudge;
 import org.mcsg.bot.drawing.painters.SprayPaint;
 import org.mcsg.bot.drawing.painters.Sunset;
 import org.mcsg.bot.util.Arguments; 
@@ -62,6 +68,9 @@ public class ImagePainterCommand implements BotCommand{
 		this.painters.put("dotlines", DotLines.class);
 		this.painters.put("spray", SprayPaint.class);
 		this.painters.put("landscape", Landscape.class);
+		this.painters.put("curves", Curves.class);
+		this.painters.put("smudge", Smudge.class);
+		this.painters.put("firework", Fireworks.class);
 
 		this.painters.put("empty", Empty.class);
 
@@ -91,7 +100,7 @@ public class ImagePainterCommand implements BotCommand{
 
 		int width = 1920; 
 		int height = 1080;
-		
+
 		System.out.println(arge.getSwitches());
 
 		if(arge.hasSwitch("resolution")) {
@@ -117,6 +126,9 @@ public class ImagePainterCommand implements BotCommand{
 		System.out.println(generators);
 
 
+		//frame(img);
+
+
 		final MapWrapper wrap = new MapWrapper();
 		for(String arg : args){
 			String [] split = arg.split(":");
@@ -135,7 +147,7 @@ public class ImagePainterCommand implements BotCommand{
 
 		if(!arge.hasSwitch("import"))
 			setBackground(img, bg);
-		
+
 		for(String gen : generators) {
 			Class<? extends AbstractPainter> generator = painters.get(gen);
 			if(generator != null) {
@@ -158,9 +170,31 @@ public class ImagePainterCommand implements BotCommand{
 
 		File file = new File(chat.getServer().getBot().getSettings().getDataFolder(), "painter_" + System.currentTimeMillis() + ".png");
 		ImageIO.write(img, "png",file);
-
 		chat.sendFile(file);
 
+	}
+
+	private void frame(BufferedImage img) {
+		JFrame frame = new JFrame();
+		frame.setSize(1280, 730);
+		JPanel panel = new JPanel() {
+			public void paintComponent(Graphics g)
+			  {
+			     super.paintComponent(g);
+			     g.drawImage(img, 0,0, 1280, 720 ,this); // draw background image
+			  } 
+		};
+		frame.add(panel);
+		panel.setBounds(0, 0, 1280, 720);
+
+		frame.setVisible(true);
+
+		new Thread(() ->  {
+			while(true) {
+				sleep(5);
+				panel.repaint();
+			}
+		}).start();
 	}
 
 	private void setBackground(BufferedImage img, Color color) {
