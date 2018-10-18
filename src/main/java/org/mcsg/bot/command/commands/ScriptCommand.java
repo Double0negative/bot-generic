@@ -84,7 +84,38 @@ public class ScriptCommand implements BotCommand{
 		return null;
 	}
 
-	private @Getter @AllArgsConstructor class CodeTemplate {
+	private  class CodeTemplate {
+		public CodeTemplate(String compileLine, String runLine, String compileExt, String runExt) {
+			super();
+			this.compileLine = compileLine;
+			this.runLine = runLine;
+			this.compileExt = compileExt;
+			this.runExt = runExt;
+		}
+		public String getCompileLine() {
+			return compileLine;
+		}
+		public void setCompileLine(String compileLine) {
+			this.compileLine = compileLine;
+		}
+		public String getRunLine() {
+			return runLine;
+		}
+		public void setRunLine(String runLine) {
+			this.runLine = runLine;
+		}
+		public String getCompileExt() {
+			return compileExt;
+		}
+		public void setCompileExt(String compileExt) {
+			this.compileExt = compileExt;
+		}
+		public String getRunExt() {
+			return runExt;
+		}
+		public void setRunExt(String runExt) {
+			this.runExt = runExt;
+		}
 		private String compileLine;
 		private String runLine;
 		private String compileExt;
