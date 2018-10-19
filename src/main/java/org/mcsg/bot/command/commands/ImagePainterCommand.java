@@ -46,6 +46,7 @@ import org.mcsg.bot.drawing.painters.Smoke;
 import org.mcsg.bot.drawing.painters.Smudge;
 import org.mcsg.bot.drawing.painters.SprayPaint;
 import org.mcsg.bot.drawing.painters.Sunset;
+import org.mcsg.bot.drawing.painters.Bricks;
 import org.mcsg.bot.util.Arguments; 
 import org.mcsg.bot.util.MapWrapper;
 
@@ -71,6 +72,7 @@ public class ImagePainterCommand implements BotCommand{
 		this.painters.put("curves", Curves.class);
 		this.painters.put("smudge", Smudge.class);
 		this.painters.put("firework", Fireworks.class);
+		this.painters.put("bricks", Bricks.class);
 
 		this.painters.put("empty", Empty.class);
 
