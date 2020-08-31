@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,16 +13,8 @@ import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.api.PermissionManager;
 import org.mcsg.bot.util.FileUtils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 public class GenericPermissionManager implements PermissionManager{
 
@@ -79,7 +70,7 @@ public class GenericPermissionManager implements PermissionManager{
 		}
 		
 		
-		while(perms.size() > 0) {
+		while(current != null) {
 			
 			if(current.getUsers().contains(user)) {
 				return true;
@@ -93,6 +84,8 @@ public class GenericPermissionManager implements PermissionManager{
 				return true;
 			}
 			
+			if(perms.size() == 0)
+				break;
 			current = traverseTree(current, perms);
 		}
 		
@@ -150,7 +143,7 @@ public class GenericPermissionManager implements PermissionManager{
 		String key = perms.remove(0);
 				
 		if(node == null) {
-			throw null;
+			return null;
 		}
 		
 		PermissionNode next = node.getNext().get(key);

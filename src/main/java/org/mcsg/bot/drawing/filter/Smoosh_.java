@@ -13,9 +13,6 @@ import org.mcsg.bot.drawing.Filter;
 import org.mcsg.bot.drawing.ImageTools;
 import org.mcsg.bot.util.MapWrapper;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 public class Smoosh_ implements Filter{
 
 	@Override
@@ -99,8 +96,22 @@ public class Smoosh_ implements Filter{
 	}
 
 
-	protected @Getter @AllArgsConstructor class ColorCount {
+	protected class ColorCount {
 		private int color, count;
+
+		public ColorCount(int color, int count) {
+			super();
+			this.color = color;
+			this.count = count;
+		}
+
+		public int getColor() {
+			return color;
+		}
+
+		public int getCount() {
+			return count;
+		}
 
 		public void inc() {
 			count++;

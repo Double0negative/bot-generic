@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.activity.InvalidActivityException;
-
 import org.apache.commons.io.FileUtils;
 import org.mcsg.bot.api.BotSettings;
 

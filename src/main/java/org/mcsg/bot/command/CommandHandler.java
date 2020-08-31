@@ -89,7 +89,7 @@ public class CommandHandler {
 					String cmd = StringUtils.replaceAll(split[0], "", prefixes);
 
 					try {
-						if(command.getPermission() == null || chat.getServer().getBot().getPermissionManager().hasPermission(chat.getServer(), user, command.getPermission() + ".use")){
+						if(command.getPermission() == null || chat.getServer().getBot().getPermissionManager().hasPermission(chat.getServer(), user, command.getPermission())){
 							command.execute(cmd, chat.getServer(), chat , user, getArgs(split), input);
 							profileInstance.setCommandCompleted(cmd, true, false);
 						} else {

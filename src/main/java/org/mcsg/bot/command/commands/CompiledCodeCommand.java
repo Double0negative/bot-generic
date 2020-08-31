@@ -15,37 +15,32 @@ import org.mcsg.bot.util.GistAPI;
 import org.mcsg.bot.util.StringUtils;
 import org.mcsg.bot.util.WebClient;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-public class CompiledCodeCommand implements BotCommand{
+public class CompiledCodeCommand implements BotCommand {
 
 	private Map<String, CompileTemplate> temps = new HashMap<>();
-	
+
 	public CompiledCodeCommand() {
 		String jtemp = "https://gist.githubusercontent.com/Double0negative/37eb50e13e35596ca1ebfd29162def49/raw/d01a0a0a37fc9b32fbe8c850ed5a709a4696674b/template.java";
-		String jscript = "cd {dir} && javac -classpath \"../java_libs/*:\" {name}.java && java -classpath \"../java_libs/*:\" {name}";		
+		String jscript = "cd {dir} && javac -classpath \"../java_libs/*:\" {name}.java && java -classpath \"../java_libs/*:\" {name}";
 		temps.put("java", new CompileTemplate(jtemp, jscript, "class ", "import", ".java", ".class"));
-		
+
 		String cstemp = "https://gist.githubusercontent.com/Double0negative/9bd350556e6a026e0e469c98bff0627e/raw/128487cfd34b2a6e43809a9b925cdddb3a5c05c0/template.cs";
-		String csscript = "cd {dir} && mcs {name}.cs && mono {name}.exe";		
-		temps.put("cs", new CompileTemplate(cstemp, csscript, "class ","using",  ".cs", ".exe"));
+		String csscript = "cd {dir} && mcs {name}.cs && mono {name}.exe";
+		temps.put("cs", new CompileTemplate(cstemp, csscript, "class ", "using", ".cs", ".exe"));
 	}
-	
-	
+
 	@Override
 	public void execute(String cmd, BotServer server, BotChannel chat, BotUser user, String[] args, String input)
 			throws Exception {
 		System.out.println(input);
 		if (server.getBot().getPermissionManager().hasPermission(server, user, "code." + cmd)) {
-			
+
 			CompileTemplate temp = temps.get(cmd);
-			
-			if(temp == null) {
+
+			if (temp == null) {
 				return;
 			}
-			
-			
+
 			String templatelink = temp.getTemplate();
 			String template = "";
 			String code = "";
@@ -56,9 +51,8 @@ public class CompiledCodeCommand implements BotCommand{
 			args = arge.getArgs();
 
 			input = StringUtils.implode(arge.getArgs());
-			
-			System.out.println(input);
 
+			System.out.println(input);
 
 			if (arge.hasSwitch("paste")) {
 				String url = arge.getSwitch("paste");
@@ -104,17 +98,18 @@ public class CompiledCodeCommand implements BotCommand{
 				}
 			}
 
-			runCode(chat, user,temp, code,  execap, arge.hasSwitch("code"));
+			runCode(chat, user, temp, code, execap, arge.hasSwitch("code"));
 
 		} else {
 			chat.sendMessage("No permission to execute command");
 		}
 
 	}
-	public void runCode(BotChannel chat, BotUser sender, CompileTemplate temp,  String code, long cap, boolean b) throws Exception {
+
+	public void runCode(BotChannel chat, BotUser sender, CompileTemplate temp, String code, long cap, boolean b)
+			throws Exception {
 		int cindex = code.indexOf(temp.getNameIdent()) + temp.getNameIdent().length();
 
-		
 		String name = code.substring(cindex, code.indexOf(" ", cindex)).trim();
 
 		File javaf = new File(chat.getServer().getBot().getSettings().getDataFolder(), name + temp.getEext());
@@ -128,14 +123,14 @@ public class CompiledCodeCommand implements BotCommand{
 
 		String cmd = temp.getScript();
 		cmd = cmd.replace("{name}", name);
-		cmd = cmd.replace("{dir}",  javac.getParentFile().getPath());
-		
+		cmd = cmd.replace("{dir}", javac.getParentFile().getPath());
+
 		exec.command(cmd);
 
 		int id = exec.limit(cap).execute();
 
 		if (b)
-			chat.sendMessage( "Running code. ID " + id + ". Code: " + GistAPI.paste("code" + temp.getCext(), code));
+			chat.sendMessage("Running code. ID " + id + ". Code: " + GistAPI.paste("code" + temp.getCext(), code));
 
 		javaf.deleteOnExit();
 		javac.deleteOnExit();
@@ -156,6 +151,7 @@ public class CompiledCodeCommand implements BotCommand{
 		}
 		return "";
 	}
+
 	@Override
 	public String getPermission() {
 		return "code";
@@ -177,16 +173,75 @@ public class CompiledCodeCommand implements BotCommand{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	protected @Data @AllArgsConstructor class CompileTemplate {
+
+	protected class CompileTemplate {
 		private String template;
 		private String script;
-		
+
 		private String nameIdent;
-		
+
 		private String importLabel;
+
 		private String cext, eext;
+
+		public CompileTemplate(String template, String script, String nameIdent, String importLabel, String cext,
+				String eext) {
+			super();
+			this.template = template;
+			this.script = script;
+			this.nameIdent = nameIdent;
+			this.importLabel = importLabel;
+			this.cext = cext;
+			this.eext = eext;
+		}
+
+		public String getTemplate() {
+			return template;
+		}
+
+		public void setTemplate(String template) {
+			this.template = template;
+		}
+
+		public String getScript() {
+			return script;
+		}
+
+		public void setScript(String script) {
+			this.script = script;
+		}
+
+		public String getNameIdent() {
+			return nameIdent;
+		}
+
+		public void setNameIdent(String nameIdent) {
+			this.nameIdent = nameIdent;
+		}
+
+		public String getImportLabel() {
+			return importLabel;
+		}
+
+		public void setImportLabel(String importLabel) {
+			this.importLabel = importLabel;
+		}
+
+		public String getCext() {
+			return cext;
+		}
+
+		public void setCext(String cext) {
+			this.cext = cext;
+		}
+
+		public String getEext() {
+			return eext;
+		}
+
+		public void setEext(String eext) {
+			this.eext = eext;
+		}
 	}
-	
-	
+
 }

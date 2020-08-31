@@ -1,10 +1,6 @@
 package org.mcsg.bot.audio;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-
-public @Getter @AllArgsConstructor class TrackInfo {
+public class TrackInfo {
 
 	private String url;
 	private String name;

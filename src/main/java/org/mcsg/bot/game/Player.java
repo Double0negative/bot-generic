@@ -1,9 +1,5 @@
 package org.mcsg.bot.game;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Setter;
-
 public  class Player {
 	
 	public Player(String id, String name, Tile tile) {

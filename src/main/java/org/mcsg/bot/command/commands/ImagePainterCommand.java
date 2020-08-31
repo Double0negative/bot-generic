@@ -125,9 +125,7 @@ public class ImagePainterCommand implements BotCommand{
 		System.out.println(img);
 		System.out.println(generators);
 
-
-		//frame(img);
-
+//		frame(img);
 
 		final MapWrapper wrap = new MapWrapper();
 		for(String arg : args){
@@ -171,7 +169,6 @@ public class ImagePainterCommand implements BotCommand{
 		File file = new File(chat.getServer().getBot().getSettings().getDataFolder(), "painter_" + System.currentTimeMillis() + ".png");
 		ImageIO.write(img, "png",file);
 		chat.sendFile(file);
-
 	}
 
 	private void frame(BufferedImage img) {

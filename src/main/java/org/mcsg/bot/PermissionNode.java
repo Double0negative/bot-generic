@@ -2,21 +2,32 @@ package org.mcsg.bot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+public  class PermissionNode {
 
-public @ToString  class PermissionNode {
-		
-		public PermissionNode() {
-			
-		}
-		
-		@Getter private ArrayList<String> users = new ArrayList<>();
-		@Getter private ArrayList<String> groups = new ArrayList<>();
-		@Getter @Setter  private Map<String, PermissionNode> next = new HashMap<>();
-		
-		
+	private ArrayList<String> users = new ArrayList<>();
+	private ArrayList<String> groups = new ArrayList<>();
+	private Map<String, PermissionNode> next = new HashMap<>();
+	
+	public PermissionNode() {
+
 	}
+	
+	public List<String> getUsers() {
+		return this.users;
+	}
+	
+	public List<String> getGroups(){
+		return this.groups;
+	}
+	
+	public void setNext(Map<String, PermissionNode> next) {
+		this.next = next;
+	}
+	
+	public Map<String, PermissionNode> getNext() {
+		return this.next;
+	}
+}

@@ -14,9 +14,6 @@ import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.shell.ShellExecutor;
 import org.mcsg.bot.util.StringUtils;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 public class ScriptCommand implements BotCommand{
 
 	private Map<String, CodeTemplate> templates = new HashMap<>();
