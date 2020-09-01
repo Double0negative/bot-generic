@@ -35,7 +35,7 @@ public class ConsoleOutput {
 		lines.add(msg);
 		
 		StringBuilder builder = new StringBuilder();
-		builder.append(enclose).append("\n").append("Output: ").append(exec.getId()).append("\n");
+		builder.append(enclose).append("\n").append("ID: ").append(exec.getId()).append("\n");
 		for(String line : lines) {
 			builder.append(line).append("\n");
 		}

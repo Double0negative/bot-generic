@@ -35,7 +35,7 @@ public class PasteAPI {
 	}
 
 
-	public static GistResponse get(String id) throws Exception{
+	public static GistResponse getGist(String id) throws Exception{
 		String json;
 		try {
 			json = WebClient.get("https://api.github.com/gists/"+id);
