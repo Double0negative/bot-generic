@@ -1,11 +1,7 @@
 package org.mcsg.bot.shell;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.io.FileUtils;
 import org.mcsg.bot.api.Bot;
 import org.mcsg.bot.api.BotChannel;
-import org.mcsg.bot.api.BotSentMessage;
-import org.mcsg.bot.util.DelayedActionMessage;
 
 public class ShellExecutor {
 
@@ -72,7 +66,6 @@ public class ShellExecutor {
 		this.file = new File(bot.getSettings().getDataFolder(), "shell_" + System.currentTimeMillis());
 
 		try {
-
 			FileUtils.writeLines(file, commands);
 
 			this.process = Runtime.getRuntime().exec("bash " + file.getAbsolutePath());

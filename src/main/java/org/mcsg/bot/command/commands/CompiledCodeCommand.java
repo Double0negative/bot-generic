@@ -44,7 +44,7 @@ public class CompiledCodeCommand implements BotCommand {
 			String templatelink = temp.getTemplate();
 			String template = "";
 			String code = "";
-			long execap = 1000;
+			long execap = 10000;
 
 			Arguments arge = new Arguments(args, "template/temp/t args", "paste/p args", "nolimit", "limit/l args",
 					"code/c", "imports/import/i args");

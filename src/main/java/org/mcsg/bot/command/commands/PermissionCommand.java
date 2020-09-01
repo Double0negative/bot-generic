@@ -22,7 +22,7 @@ public class PermissionCommand implements BotCommand{
 		String p = args[2];
 		
 		if(args.length == 3) {
-			if(args[0].equalsIgnoreCase("add") && manager.hasPermission(server, user, "perm.add")) {
+			if(args[0].equalsIgnoreCase("add") && manager.hasPermission(server, user, "perm.add")) { 
 				manager.addPermission(server, id, p);
 				
 				chat.sendMessage("Permission added");
