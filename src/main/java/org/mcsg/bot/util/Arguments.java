@@ -52,6 +52,10 @@ public class Arguments {
 		return getSwitches().get(swi);
 	}
 	
+	public String getSwitch(String swi, String def) {
+		return this.getSwitch(swi) != null ? this.getSwitch(swi) : def;
+	}
+	
 	public boolean hasSwitch(String swi) {
 		return getSwitches().containsKey(swi);
 	}

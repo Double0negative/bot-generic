@@ -2,14 +2,14 @@ package org.mcsg.bot.util;
 
 import java.util.HashMap;
 
-import org.mcsg.bot.util.GistAPI.GistPaste.Paste;
+import org.mcsg.bot.util.PasteAPI.GistPaste.Paste;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-public class GistAPI {
+public class PasteAPI {
 
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -46,6 +46,22 @@ public class GistAPI {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static String getPaste(String url) {
+		String gist = "https://gist.githubusercontent.com/$id/raw";
+		String paste = "http://pastebin.com/raw.php?i=$id";
+
+		String id = "";
+
+		if (url.contains("pastebin")) {
+			id = url.substring(url.lastIndexOf("/") + 1);
+			return paste.replace("$id", id);
+		} else if (url.contains("github")) {
+			id = url.substring(url.indexOf("/", 15) + 1);
+			return gist.replace("$id", id);
+		}
+		return "";
 	}
 
 	public static class GistPaste {

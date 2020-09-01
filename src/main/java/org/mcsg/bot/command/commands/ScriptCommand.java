@@ -12,6 +12,8 @@ import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotServer;
 import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.shell.ShellExecutor;
+import org.mcsg.bot.util.Arguments;
+import org.mcsg.bot.util.PasteAPI;
 import org.mcsg.bot.util.StringUtils;
 
 public class ScriptCommand implements BotCommand{
@@ -30,6 +32,15 @@ public class ScriptCommand implements BotCommand{
 	public void execute(String cmd,  BotServer server, BotChannel chat, BotUser user, String[] args, String input) throws Exception {
 		System.out.println(input);
 		CodeTemplate temp = templates.get(cmd);
+		
+		Arguments arge = new Arguments(args, "paste/p args", "nolimit", "limit/l args");
+		
+		long limit = arge.hasSwitch("nolimit") ? 0 : Long.parseLong(arge.getSwitch("limit", "10000"));
+		
+		if(arge.hasSwitch("paste")) {
+			input = PasteAPI.getPaste(arge.getSwitch("paste"));
+		}
+		
 		if (temp != null) {
 			long time = System.currentTimeMillis();
 			File runFile = new File(chat.getServer().getBot().getSettings().getDataFolder(), time + temp.getRunExt());
@@ -55,9 +66,7 @@ public class ScriptCommand implements BotCommand{
 
 			ShellExecutor exec = new ShellExecutor(chat.getServer().getBot());
 			
-			exec.chat(chat).command(temp.getRunLine().replace("{file}", runFile.getAbsolutePath())).execute();
-			
-			
+			exec.chat(chat).limit(limit).command(temp.getRunLine().replace("{file}", runFile.getAbsolutePath())).execute();
 		}
 
 	}

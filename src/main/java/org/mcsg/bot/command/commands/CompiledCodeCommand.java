@@ -11,7 +11,7 @@ import org.mcsg.bot.api.BotUser;
 import org.mcsg.bot.shell.ShellExecutor;
 import org.mcsg.bot.util.Arguments;
 import org.mcsg.bot.util.FileUtils;
-import org.mcsg.bot.util.GistAPI;
+import org.mcsg.bot.util.PasteAPI;
 import org.mcsg.bot.util.StringUtils;
 import org.mcsg.bot.util.WebClient;
 
@@ -34,7 +34,6 @@ public class CompiledCodeCommand implements BotCommand {
 			throws Exception {
 		System.out.println(input);
 		if (server.getBot().getPermissionManager().hasPermission(server, user, "code." + cmd)) {
-
 			CompileTemplate temp = temps.get(cmd);
 
 			if (temp == null) {
@@ -56,7 +55,7 @@ public class CompiledCodeCommand implements BotCommand {
 
 			if (arge.hasSwitch("paste")) {
 				String url = arge.getSwitch("paste");
-				String link = getPasteLink(url);
+				String link = PasteAPI.getPaste(url);
 				// System.out.println(link);
 				code = WebClient.get(link);
 				code = code.replace("$code", "");
@@ -64,7 +63,7 @@ public class CompiledCodeCommand implements BotCommand {
 				code = StringUtils.implode(args);
 
 				if (arge.hasSwitch("template")) {
-					String link = getPasteLink(arge.getSwitch("template"));
+					String link = PasteAPI.getPaste(arge.getSwitch("template"));
 					// System.out.println(link);
 					templatelink = link;
 				}
@@ -130,26 +129,10 @@ public class CompiledCodeCommand implements BotCommand {
 		int id = exec.limit(cap).execute();
 
 		if (b)
-			chat.sendMessage("Running code. ID " + id + ". Code: " + GistAPI.paste("code" + temp.getCext(), code));
+			chat.sendMessage("Running code. ID " + id + ". Code: " + PasteAPI.paste("code" + temp.getCext(), code));
 
 		javaf.deleteOnExit();
 		javac.deleteOnExit();
-	}
-
-	public String getPasteLink(String url) {
-		String gist = "https://gist.githubusercontent.com/$id/raw";
-		String paste = "http://pastebin.com/raw.php?i=$id";
-
-		String id = "";
-
-		if (url.contains("pastebin")) {
-			id = url.substring(url.lastIndexOf("/") + 1);
-			return paste.replace("$id", id);
-		} else if (url.contains("github")) {
-			id = url.substring(url.indexOf("/", 15) + 1);
-			return gist.replace("$id", id);
-		}
-		return "";
 	}
 
 	@Override
