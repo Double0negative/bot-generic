@@ -62,7 +62,7 @@ public class GistPluginImporter implements PluginImporter {
 	@Override
 	public void buildPlugin() throws Exception {
 		ShellExecutor exec = new ShellExecutor(this.bot).chat(this.channel)
-				.command("javac -cp \"" + this.bot.getSettings().getBaseFolder().getAbsolutePath() + File.separator
+				.command("javac -proc:none -cp \"" + this.bot.getSettings().getBaseFolder().getAbsolutePath() + File.separator
 						+ "java_libs" + File.separator + "*" + File.pathSeparator + "." + File.pathSeparator
 						+ this.bot.getSettings().getBaseFolder().getAbsolutePath() + File.separator + "target"
 						+ File.separator + "*" + File.pathSeparator + this.buildFolder.getAbsolutePath() + "\" \""
