@@ -6,6 +6,8 @@ import java.util.Map;
 
 public interface BotSettings {
 	
+	public File getBaseFolder();
+	
 	public File getSettingsFolder();
 	
 	public File getDataFolder();

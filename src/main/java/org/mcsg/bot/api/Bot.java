@@ -1,12 +1,15 @@
 package org.mcsg.bot.api;
 
 import org.mcsg.bot.command.CommandHandler;
+import org.mcsg.bot.plugin.PluginManager;
 
 public interface Bot {
 
 	public String getClientName();
 	
 	public CommandHandler getCommandHandler();
+	
+	public PluginManager getPluginManager();
 	
 	public BotUser getUser(String id);
 	

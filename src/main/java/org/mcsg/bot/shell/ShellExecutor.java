@@ -114,6 +114,10 @@ public class ShellExecutor {
 		writer.println(str);
 		writer.flush();
 	}
+	
+	public int getExitCode() {
+		return this.process.exitValue();
+	}
 
 	public int getId() {
 		return id;

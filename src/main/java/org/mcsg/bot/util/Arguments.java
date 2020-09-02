@@ -17,8 +17,6 @@ public class Arguments {
 			String split[] = arg.split(" ");
 			List<String> swi = Arrays.asList(split[0].split("/"));
 
-
-			
 			int index = -1;
 			for(String str : swi){
 				if(list.contains("-"+str)){

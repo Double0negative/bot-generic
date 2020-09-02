@@ -37,6 +37,10 @@ public class PasteAPI {
 
 	public static GistResponse getGist(String id) throws Exception{
 		String json;
+		
+		if(id.contains("https")) {
+			id = id.substring(id.lastIndexOf("/") + 1);
+		}
 		try {
 			json = WebClient.get("https://api.github.com/gists/"+id);
 			return gson.fromJson(json, GistResponse.class);

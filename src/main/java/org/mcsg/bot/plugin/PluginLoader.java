@@ -31,7 +31,7 @@ public class PluginLoader {
 		Class<?> clazz = Class.forName(meta.main, true, loader);
 
 		try{
-			BotPlugin plugin = clazz.asSubclass(BotPlugin.class).newInstance();
+			BotPlugin plugin = clazz.asSubclass(BotPlugin.class).getConstructor().newInstance();
 			
 			meta.setInstance(plugin);
 		} catch (Exception e) {

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import org.mcsg.bot.command.commands.KillCommand;
 import org.mcsg.bot.command.commands.MusicBotCommand;
 import org.mcsg.bot.command.commands.PermissionCommand;
 import org.mcsg.bot.command.commands.PingCommand;
+import org.mcsg.bot.command.commands.PluginCommand;
 import org.mcsg.bot.command.commands.ProfilerCommand;
 import org.mcsg.bot.command.commands.QueueTestCommand;
 import org.mcsg.bot.command.commands.RandomNumberCommand;
@@ -31,19 +33,23 @@ import org.mcsg.bot.command.commands.ShellCommand;
 import org.mcsg.bot.command.commands.ShellInputCommand;
 import org.mcsg.bot.command.commands.StopCommand;
 import org.mcsg.bot.command.commands.VersionCommand;
+import org.mcsg.bot.plugin.BotPlugin;
 import org.mcsg.bot.profiler.ProfileInstance;
 import org.mcsg.bot.profiler.Profiler;
 import org.mcsg.bot.util.StringUtils;
 
 public class CommandHandler {
 
-	Bot bot;
-	String[] prefixes;
-	Map<String, BotCommand> commands = new HashMap<>();
-	Map<String, BotCommand> raw = new HashMap<>();
+	private Bot bot;
+	private String[] prefixes;
+	private Map<String, BotCommand> commands = new HashMap<>();
+	private Map<String, BotCommand> raw = new HashMap<>();
+	private Map<BotPlugin, List<BotCommand>> plugins = new HashMap<>();
 	
-	List<String> disabled = new ArrayList<>();
-	List<String> enabled = new ArrayList<>();
+	private List<String> disabled = new ArrayList<>();
+	private List<String> enabled = new ArrayList<>();
+	
+	private boolean allowNoPlugin = true;
 
 	public CommandHandler(Bot bot) {
 		this.bot = bot;
@@ -69,6 +75,12 @@ public class CommandHandler {
 		registerCommand(new KillCommand());
 		registerCommand(new GameCommand());
 		registerCommand(new ProfilerCommand());
+		registerCommand(new PluginCommand());
+		
+	}
+	
+	public void disableNullPluginRegistration() {
+		this.allowNoPlugin = false;
 	}
 
 	public void executeCommand(String msg, BotChannel chat, BotUser user) {
@@ -108,14 +120,24 @@ public class CommandHandler {
 			}
 		}
 	}
+	
+	private void registerCommand(BotCommand command) {
+		this.registerCommand(null, command);
+	}
 
-	public void registerCommand(BotCommand command) {
+	public void registerCommand(BotPlugin plugin, BotCommand command) {
+		if(plugin == null && !allowNoPlugin) {
+			throw new IllegalArgumentException("Not allowing null as plugin on command register");
+		}
 		for(String pre : prefixes) {
 			for(String cmd : command.getCommand()) {
 				if(disabled == null || !disabled.contains(cmd)){
 					if(enabled == null || enabled.contains(cmd) ) {
 						raw.put(cmd,  command);
 						commands.put(pre + cmd, command);
+						List<BotCommand> list = plugins.getOrDefault(plugin, new ArrayList<>());
+						list.add(command);
+						plugins.put(plugin, list);
 					}
 				}
 			}
@@ -129,6 +151,11 @@ public class CommandHandler {
 				commands.remove(pre + cmd);
 			}
 		}
+	}
+	
+	public void unregisterPlugin(BotPlugin plugin) {
+		this.plugins.getOrDefault(plugin, Collections.emptyList()).forEach(this::unregisterCommand);
+		this.plugins.remove(plugin);
 	}
 
 	private BotCommand getCommand(String cmd) {

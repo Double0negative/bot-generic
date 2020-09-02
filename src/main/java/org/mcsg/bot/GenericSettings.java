@@ -173,6 +173,9 @@ public class GenericSettings implements BotSettings{
 	}
 
 
-
+	@Override
+	public File getBaseFolder() {
+		return new File("");
+	}
 
 }
