@@ -18,6 +18,10 @@ public abstract class AbstractPainter implements Painter {
 	protected int height;
 
 	public AbstractPainter(BufferedImage img){
+		this.setImage(img);
+	}
+	
+	public void setImage(BufferedImage img) {
 		this.img = img;
 
 		this.height = img.getHeight();
@@ -25,7 +29,6 @@ public abstract class AbstractPainter implements Painter {
 		this.g = (Graphics2D)img.getGraphics();
 		
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
 	}
 
 	@Override

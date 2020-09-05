@@ -20,6 +20,12 @@ public class Fireworks extends AbstractPainter{
 
 	@Override
 	public void paint(MapWrapper args) {
+		for(int a = 0; a < rand.nextInt(3) + 3; a++) {
+			drawFirework(args);
+		}
+	}
+	
+	public void drawFirework(MapWrapper args) {
 		int x = rand.nextInt(width);
 		int y = rand.nextInt(height - height / 3);
 
@@ -71,7 +77,7 @@ public class Fireworks extends AbstractPainter{
 
 	private void drawSpark(List<Trail> trails) {
 		g.setColor(createColor());
-		g.setComposite(BlendComposite.getInstance(BlendingMode.ADD));
+//		g.setComposite(BlendComposite.getInstance(BlendingMode.ADD));
 		for(Trail trail : trails) {
 			double diff = 4;
 			for(int a = 30; a > 10; a-=diff) {

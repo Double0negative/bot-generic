@@ -128,7 +128,7 @@ public class ImagePainterCommand implements BotCommand {
 		}
 
 		if (img == null) {
-			img = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+			img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		}
 		System.out.println(img);
 		System.out.println(generators);
