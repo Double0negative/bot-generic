@@ -35,7 +35,7 @@ public class Sunset extends AbstractPainter{
 
 	private void drawBackground() {
 		
-		for(int y = 0; y < 1000; y++) {
+		for(int y = 0; y < 300; y++) {
 			int col = rand.nextInt(100) + 150;
 			Color color = new Color (col, col, 255, 10);
 			g.setColor(color);

@@ -3,20 +3,29 @@ package org.mcsg.bot.command.commands;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.eclipse.jetty.util.FuturePromise;
 import org.mcsg.bot.api.BotChannel;
 import org.mcsg.bot.api.BotCommand;
 import org.mcsg.bot.api.BotServer;
@@ -48,6 +57,10 @@ import org.mcsg.bot.drawing.painters.SprayPaint;
 import org.mcsg.bot.drawing.painters.Sunset;
 import org.mcsg.bot.util.Arguments;
 import org.mcsg.bot.util.MapWrapper;
+import org.mcsg.bot.util.VideoHelper;
+
+import io.humble.ferry.AtomicInteger;
+import io.humble.video.Codec;
 
 public class ImagePainterCommand implements BotCommand {
 
@@ -95,7 +108,8 @@ public class ImagePainterCommand implements BotCommand {
 	@Override
 	public void execute(String cmd, BotServer server, BotChannel chat, BotUser user, String[] args, String input)
 			throws Exception {
-		Arguments arge = new Arguments(args, "background/bg arg", "resolution/res arg", "filter arg", "import arg");
+		Arguments arge = new Arguments(args, "background/bg arg", "resolution/res arg", "filter arg", "import arg",
+				"video/v");
 
 		String randGen = getRandomKey(painters);
 		List<String> generators = new ArrayList<>();
@@ -132,6 +146,13 @@ public class ImagePainterCommand implements BotCommand {
 		}
 		System.out.println(img);
 		System.out.println(generators);
+		FuturePromise<Boolean> future = new FuturePromise<Boolean>();
+
+		if (arge.hasSwitch("video")) {
+			File folder = new File(chat.getServer().getBot().getSettings().getDataFolder(),
+					System.currentTimeMillis() + ".mp4");
+			generateVideo(chat, folder, img, width, height, future);
+		}
 
 //		frame(img);
 
@@ -174,12 +195,49 @@ public class ImagePainterCommand implements BotCommand {
 				}
 			}
 		}
+		future.succeeded(true);
 
 		File file = new File(chat.getServer().getBot().getSettings().getDataFolder(),
 				"painter_" + System.currentTimeMillis() + ".png");
 		ImageIO.write(img, "png", file);
 		chat.sendFile(file);
 	}
+
+	//this is kinda awful but its 2am and I want to sleep without it running out of mem
+	private void generateVideo(BotChannel chat, File file, BufferedImage img, int width, int height, Future<Boolean> future) {
+		List<BufferedImage> frames = Collections.synchronizedList(new ArrayList<>());
+		int vWidth = Math.min(1280,  width);
+		int vHeight = Math.min(720, height);
+		new Thread(() -> {
+			while (!future.isDone()) {
+				sleep(1);
+				frames.add(resize(img,vWidth, vHeight));
+			}
+			System.out.println("Done creating frames");
+		}).start();
+		new Thread(() -> {
+			try {
+				System.out.println("Staring frame dumper");
+				VideoHelper.dumpFrames(frames, file.getAbsolutePath(), "mp4", null,vWidth, vHeight, future);
+				System.out.println("Frame dumper completed");
+				chat.sendFile(file);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+		}).start();
+	}
+
+	public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
+//	    Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+	    BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D g2d = dimg.createGraphics();
+	    g2d.drawImage(img, 0, 0,newW, newH, null);
+	    g2d.dispose();
+
+	    return dimg;
+	}  
 
 	private void frame(BufferedImage img) {
 		JFrame frame = new JFrame();
