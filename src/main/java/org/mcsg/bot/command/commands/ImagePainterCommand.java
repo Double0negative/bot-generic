@@ -36,6 +36,8 @@ import org.mcsg.bot.drawing.filter.Bloom2;
 import org.mcsg.bot.drawing.filter.ChromaticAberration;
 import org.mcsg.bot.drawing.filter.Distort_;
 import org.mcsg.bot.drawing.filter.Edge;
+import org.mcsg.bot.drawing.filter.Hash;
+import org.mcsg.bot.drawing.filter.Hash2;
 import org.mcsg.bot.drawing.filter.Warp;
 import org.mcsg.bot.drawing.filter.Pixelate;
 import org.mcsg.bot.drawing.filter.ScanLines;
@@ -84,6 +86,7 @@ public class ImagePainterCommand implements BotCommand {
 		ImagePainterCommand.painters.put("curves", Curves.class);
 		ImagePainterCommand.painters.put("smudge", Smudge.class);
 		ImagePainterCommand.painters.put("firework", Fireworks.class);
+		ImagePainterCommand.painters.put("hash", org.mcsg.bot.drawing.painters.Hash.class);
 
 		ImagePainterCommand.painters.put("empty", Empty.class);
 
@@ -95,6 +98,9 @@ public class ImagePainterCommand implements BotCommand {
 		ImagePainterCommand.filters.put("warp", Warp.class);
 		ImagePainterCommand.filters.put("scanlines", ScanLines.class);
 		ImagePainterCommand.filters.put("bloom2", Bloom2.class);
+		ImagePainterCommand.filters.put("hash", Hash.class);
+		ImagePainterCommand.filters.put("hash2", Hash2.class);
+
 	}
 
 	public static void registerPainter(String name, Class<? extends AbstractPainter> painter) {

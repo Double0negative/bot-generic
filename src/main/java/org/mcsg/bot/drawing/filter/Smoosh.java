@@ -22,20 +22,17 @@ public class Smoosh implements Filter{
 	}
 
 	private BufferedImage create(BufferedImage input, int[][] colors) {
-		BufferedImage output = blank(input);
-		
-		
 		for(int x = 0; x < input.getWidth(); x++) {
 			for(int y = 0; y < input.getHeight(); y++) {
 				int []color = ImageTools.getRgb(input.getRGB(x, y));
 				
 				int [] close = getClosest(color, colors);
 				
-				output.setRGB(x, y, ImageTools.rgbToInt(close[0], close[1], close[2]));
+				input.setRGB(x, y, ImageTools.rgbToInt(close[0], close[1], close[2]));
 			}
 		}
 		
-		return output;
+		return input;
 	}
 	
 	private int[] getClosest(int [] color, int [][] colors) {

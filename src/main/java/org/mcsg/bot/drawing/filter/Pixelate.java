@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.mcsg.bot.drawing.Filter;
+import org.mcsg.bot.drawing.PixelData;
 import org.mcsg.bot.util.MapWrapper;
 import org.mcsg.bot.util.Point;
 
@@ -108,34 +109,6 @@ public class Pixelate implements Filter{
 
 	}
 
-	public class PixelData{
-		int x,y;
-		Color color;
-		public PixelData(int x, int y, Color color) {
-			super();
-			this.x = x;
-			this.y = y;
-			this.color = color;
-		}
-		public int getX() {
-			return x;
-		}
-		public void setX(int x) {
-			this.x = x;
-		}
-		public int getY() {
-			return y;
-		}
-		public void setY(int y) {
-			this.y = y;
-		}
-		public Color getColor() {
-			return color;
-		}
-		public void setColor(Color color) {
-			this.color = color;
-		}
-		
-	}
+	
 
 }

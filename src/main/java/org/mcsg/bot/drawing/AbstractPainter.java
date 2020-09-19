@@ -94,6 +94,18 @@ public abstract class AbstractPainter implements Painter {
 
 		return incColor(color, r,g, b, a);
 	}
+	
+	public int randInc(int pos, int amount, int max) {
+		pos += (int) (rand.nextDouble() * (amount * 2) - amount);
+		pos = ImageTools.limit(pos, max, 0);
+		
+		return pos;
+	}
 
+	
+	public int randInc(int pos, int amount) {
+		pos += (int) (rand.nextDouble() * (amount * 2) - amount);
+		return pos;
+	}
 }
 

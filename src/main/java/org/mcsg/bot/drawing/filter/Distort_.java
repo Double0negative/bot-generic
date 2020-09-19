@@ -7,7 +7,6 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.mcsg.bot.drawing.Filter;
-import org.mcsg.bot.drawing.filter.Pixelate.PixelData;
 import org.mcsg.bot.util.MapWrapper;
 
 public class Distort_ implements Filter{
