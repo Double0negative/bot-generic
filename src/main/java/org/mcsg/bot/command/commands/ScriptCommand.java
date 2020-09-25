@@ -41,6 +41,8 @@ public class ScriptCommand implements BotCommand{
 			input = PasteAPI.getPaste(arge.getSwitch("paste"));
 		}
 		
+		input = input.replace("```", "");
+		
 		if (temp != null) {
 			long time = System.currentTimeMillis();
 			File runFile = new File(chat.getServer().getBot().getSettings().getDataFolder(), time + temp.getRunExt());

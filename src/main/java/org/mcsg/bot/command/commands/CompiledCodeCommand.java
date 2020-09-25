@@ -49,7 +49,7 @@ public class CompiledCodeCommand implements BotCommand {
 					"code/c", "imports/import/i args");
 			args = arge.getArgs();
 
-			input = StringUtils.implode(arge.getArgs());
+			input = StringUtils.implode(arge.getArgs()).replace("```", "");
 
 			System.out.println(input);
 

@@ -57,6 +57,7 @@ import org.mcsg.bot.drawing.painters.Smoke;
 import org.mcsg.bot.drawing.painters.Smudge;
 import org.mcsg.bot.drawing.painters.SprayPaint;
 import org.mcsg.bot.drawing.painters.Sunset;
+import org.mcsg.bot.drawing.painters.Time;
 import org.mcsg.bot.util.Arguments;
 import org.mcsg.bot.util.MapWrapper;
 import org.mcsg.bot.util.VideoHelper;
@@ -87,6 +88,7 @@ public class ImagePainterCommand implements BotCommand {
 		ImagePainterCommand.painters.put("smudge", Smudge.class);
 		ImagePainterCommand.painters.put("firework", Fireworks.class);
 		ImagePainterCommand.painters.put("hash", org.mcsg.bot.drawing.painters.Hash.class);
+		ImagePainterCommand.painters.put("time", Time.class);
 
 		ImagePainterCommand.painters.put("empty", Empty.class);
 
