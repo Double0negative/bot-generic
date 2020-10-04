@@ -52,9 +52,11 @@ import org.mcsg.bot.drawing.painters.Empty;
 import org.mcsg.bot.drawing.painters.Fireworks;
 import org.mcsg.bot.drawing.painters.Landscape;
 import org.mcsg.bot.drawing.painters.Lines;
+import org.mcsg.bot.drawing.painters.Linked;
 import org.mcsg.bot.drawing.painters.BasicShapes;
 import org.mcsg.bot.drawing.painters.Smoke;
 import org.mcsg.bot.drawing.painters.Smudge;
+import org.mcsg.bot.drawing.painters.Spooky;
 import org.mcsg.bot.drawing.painters.SprayPaint;
 import org.mcsg.bot.drawing.painters.Sunset;
 import org.mcsg.bot.drawing.painters.Time;
@@ -88,7 +90,9 @@ public class ImagePainterCommand implements BotCommand {
 		ImagePainterCommand.painters.put("smudge", Smudge.class);
 		ImagePainterCommand.painters.put("firework", Fireworks.class);
 		ImagePainterCommand.painters.put("hash", org.mcsg.bot.drawing.painters.Hash.class);
-		ImagePainterCommand.painters.put("time", Time.class);
+//		ImagePainterCommand.painters.put("time", Time.class);
+		ImagePainterCommand.painters.put("linked", Linked.class);
+		ImagePainterCommand.painters.put("spooky", Spooky.class);
 
 		ImagePainterCommand.painters.put("empty", Empty.class);
 
