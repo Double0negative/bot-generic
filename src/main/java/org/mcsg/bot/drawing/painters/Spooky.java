@@ -24,11 +24,12 @@ public class Spooky extends AbstractPainter {
 		drawBackground();
 		drawMoon();
 		drawClouds();
+//		drawBats();
 		drawLand();
-		drawFog();
+		drawFog(0);
 		drawTrees();
-		drawFog();
-
+		drawFog(-200);
+//		drawGravyard();
 	}
 
 	private void drawBackground() {
@@ -82,7 +83,6 @@ public class Spooky extends AbstractPainter {
 	}
 
 	private void drawCloud(int cx, int cy, int size, int fluff, int fluffMaxSize, Color top, Color bottom) {
-
 		for (int cloudInterations = 0; cloudInterations < fluff; cloudInterations++) {
 			int offx = rand.nextInt(size * 2) - size;
 			int offy = (int) (rand.nextInt(size) - size / 2);
@@ -114,6 +114,33 @@ public class Spooky extends AbstractPainter {
 		}
 	}
 
+	private void drawBats() {
+		int clusters = rand.nextInt(6) + 2;
+		g.setColor(Color.BLACK);
+		g.setStroke(new BasicStroke(4));
+		for(int a = 0; a < clusters ; a++) {
+			int bats = rand.nextInt(8);
+			int x = rand.nextInt(width);
+			int y = rand.nextInt(height);
+			for(int b = 0; b < bats ; b++) {
+				double angle =  (Math.random() * (Math.PI / 4)) - Math.PI / 2;
+				int offsetx = x + rand.nextInt(300) - 150;
+				int offsety = y + rand.nextInt(200) - 100;
+
+				double flapAngle =  .3 + (Math.random() * (Math.PI / 8));
+				
+				
+				int x2 = (int) (offsetx + (20 * Math.cos(angle + flapAngle)));
+				int y2 = (int) (offsety + (20 * Math.sin(angle + flapAngle)));
+				g.drawLine(offsetx, offsety, x2, y2);
+				
+				int x2_2 = (int) (offsetx + (20 * Math.cos(angle - flapAngle)));
+				int y2_2 = (int) (offsety + (20 * Math.sin(angle - flapAngle)));
+				g.drawLine(offsetx, offsety, x2_2, y2_2);
+			}
+		}
+	}
+	
 	int halfHeight = height / 2;
 	double landMap[][] = ImageTools.createNoise(halfHeight, width, 1, width, halfHeight, rand.nextDouble() * .3 + .1);
 	int lowestLand = Integer.MAX_VALUE;
@@ -122,17 +149,17 @@ public class Spooky extends AbstractPainter {
 		g.setStroke(new BasicStroke(2));
 		g.setColor(Color.black);
 		for (int x = 0; x < width; x++) {
-			int value = (int) (halfHeight * (landMap[x][0] + .4)) + 200;
+			int value = (int) (halfHeight * (landMap[x][0] + .4)) + 400;
 			lowestLand = Math.min(lowestLand, value);
 			g.drawLine(x, height, x, height - value);
 		}
 	}
 
-	private void drawFog() {
-		int maxLevel = rand.nextInt(lowestLand);
-		int taper = maxLevel - 100;
+	private void drawFog(int offset) {
+		int maxLevel = rand.nextInt(lowestLand + offset);
+		int taper = maxLevel - 200;
 		
-		double noise[][] = ImageTools.createNoise(200, width, maxLevel, 400, 200, .3);
+		double noise[][] = ImageTools.createNoise(200, width, maxLevel, 400, 400, .3);
 
 		
 		for (int x = 0; x < width; x += 1) {
@@ -153,9 +180,11 @@ public class Spooky extends AbstractPainter {
 	}
 
 	private void drawTrees() {
-		for (int count = rand.nextInt(3) + 1; count-- > 0;)
-			drawBranch(rand.nextInt(width), height - rand.nextInt(height / 6), 300, rand.nextInt(100) + 40,
+		for (int count = rand.nextInt(3) + 1; count-- > 0;) {
+			int y = height - rand.nextInt(lowestLand);
+			drawBranch(rand.nextInt(width),y, Math.max(80, y - halfHeight), (int) Math.max(30, ((y - halfHeight) * .4)),
 					-Math.PI / 2, 5, true);
+		}
 	}
 
 	private void drawBranch(int rootX, int rootY, int length, int width, double angle, int count, boolean first) {
@@ -188,6 +217,24 @@ public class Spooky extends AbstractPainter {
 			drawBranch(newX, newY, (int) (length * (Math.random() * .2 + .6)), width / 2, offset, count, false);
 		}
 
+	}
+	
+	private void drawGravyard() {
+		int clusters = rand.nextInt(6) + 2;
+		for(int a = 0; a < clusters ; a++) {
+			int headstones = rand.nextInt(4);
+			int rootX = rand.nextInt(width);
+			int rootY = height - rand.nextInt(this.lowestLand);
+			for(int b = 0; b < headstones ; b++) {
+				int offsetX = rand.nextInt(400) - 200;
+				int offsetY = rand.nextInt(150) - 75;
+
+				g.setStroke(new BasicStroke(50));
+				g.setColor(Color.black);
+				g.drawLine(rootX + offsetX, rootY + offsetY, rootX + offsetX, rootY - 100 + offsetY);
+				this.drawCircle(rootX + offsetX, rootY - 125 + offsetY, 50);
+			}
+		}
 	}
 
 	private int fade(int start, int end, double perc) {
