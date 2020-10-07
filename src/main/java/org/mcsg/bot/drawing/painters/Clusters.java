@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.mcsg.bot.drawing.AbstractPainter;
 import org.mcsg.bot.drawing.ImageTools;
+import org.mcsg.bot.drawing.Vec2;
 import org.mcsg.bot.util.MapWrapper;
-import org.mcsg.bot.util.Point;
 
 public class Clusters extends AbstractPainter {
 
@@ -21,14 +21,14 @@ public class Clusters extends AbstractPainter {
 	}
 
 
-	private List<Point> points = new ArrayList<>();
+	private List<Vec2> points = new ArrayList<>();
 	private Color baseColor;
 
 
 	public void paint(MapWrapper args) {
 		int c = args.getInt("count", rand.nextInt(5) + 1) ;
 		for(int a = 0; a <  c; a++){
-			points.add(new Point(rand.nextInt(width ) , rand.nextInt(height )));
+			points.add(new Vec2(rand.nextInt(width ) , rand.nextInt(height )));
 		}
 
 //		g.setColor(Color.black);
@@ -39,7 +39,7 @@ public class Clusters extends AbstractPainter {
 			int y = rand.nextInt(height);
 
 			int dis = Integer.MAX_VALUE;
-			for(Point point : points){
+			for(Vec2 point : points){
 				dis = Math.min(dis, Math.abs(point.distance(x, y)));
 			}
 

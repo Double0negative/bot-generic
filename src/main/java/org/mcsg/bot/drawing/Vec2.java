@@ -1,12 +1,14 @@
-package org.mcsg.bot.util;
+package org.mcsg.bot.drawing;
 
-public class Point {
+public class Vec2 {
 
-	public Point(Point point){
+	public int x,y;
+
+	public Vec2(Vec2 point){
 		this(point.getX(), point.getY());
 	}
 	
-	public Point(int x, int y) {
+	public Vec2(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -35,13 +37,26 @@ public class Point {
 		this.y = y;
 	}
 
-	int x,y;
+	public void add(int a) {
+		this.x += a;
+		this.y += a; 
+	}
+	
+	public void mult(int a) {
+		this.x *= a;
+		this.y *= a; 
+	}
+	
+	public void div(int a) {
+		this.x /= a;
+		this.y /= a; 
+	}
 	
 	public int distance(int x, int y){
 		return (int) Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
 	}
 	
-	public int distance(Point pnt){
+	public int distance(Vec2 pnt){
 		return distance(pnt.getX(), pnt.getY());
 	}
 	

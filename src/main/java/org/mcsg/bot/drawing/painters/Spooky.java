@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.mcsg.bot.drawing.AbstractPainter;
 import org.mcsg.bot.drawing.ImageTools;
+import org.mcsg.bot.drawing.Vec2;
 import org.mcsg.bot.util.MapWrapper;
-import org.mcsg.bot.util.Point;
 
 public class Spooky extends AbstractPainter {
 
@@ -75,7 +75,7 @@ public class Spooky extends AbstractPainter {
 			int cx = rand.nextInt(width);
 			int cy = rand.nextInt(height);
 
-			if (new Point(cx, cy).distance(new Point(moonx, moony)) > size + fluffSize + moonSize) {
+			if (new Vec2(cx, cy).distance(new Vec2(moonx, moony)) > size + fluffSize + moonSize) {
 				drawCloud(cx, cy, size, 30, fluffSize, darker(moonColor, 100), new Color(40, 40, 40));
 				a++;
 			}
@@ -86,20 +86,20 @@ public class Spooky extends AbstractPainter {
 		for (int cloudInterations = 0; cloudInterations < fluff; cloudInterations++) {
 			int offx = rand.nextInt(size * 2) - size;
 			int offy = (int) (rand.nextInt(size) - size / 2);
-			Point center = new Point(cx + offx, cy + offy);
+			Vec2 center = new Vec2(cx + offx, cy + offy);
 			int fluffSize = rand.nextInt(fluffMaxSize) + 20;
 
-			double angleFromMoon = getAngleFromPoint(new Point(moonx, moony), center);
+			double angleFromMoon = getAngleFromPoint(new Vec2(moonx, moony), center);
 
 			int edgex = (int) (center.getX() + (fluffSize * Math.cos(angleFromMoon)));
 			int edgey = (int) (center.getY() + (fluffSize * Math.sin(angleFromMoon)));
-			Point edgePoint = new Point(edgex, edgey);
+			Vec2 edgePoint = new Vec2(edgex, edgey);
 
 			for (int distance = 0; distance < fluffSize; distance += 5) {
 				for (double ang = 0; ang < Math.PI * 2; ang += .2) {
 					int posx = (int) (distance * Math.sin(ang));
 					int posy = (int) (distance * Math.cos(ang));
-					Point point = new Point(center.getX() + posx, center.getY() + posy);
+					Vec2 point = new Vec2(center.getX() + posx, center.getY() + posy);
 
 					int s = rand.nextInt(50);
 
@@ -243,7 +243,7 @@ public class Spooky extends AbstractPainter {
 		return (int) ImageTools.limit((start + offset), 255, 0);
 	}
 
-	public double getAngleFromPoint(Point firstPoint, Point secondPoint) {
+	public double getAngleFromPoint(Vec2 firstPoint, Vec2 secondPoint) {
 		return Math.atan2((secondPoint.getX() - firstPoint.getX()), (firstPoint.getY() - secondPoint.getY()))
 				+ 2.5 * Math.PI;
 	}

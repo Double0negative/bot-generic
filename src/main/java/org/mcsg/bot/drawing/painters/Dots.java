@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 
 import org.mcsg.bot.drawing.AbstractPainter;
 import org.mcsg.bot.drawing.ImageTools;
+import org.mcsg.bot.drawing.Vec2;
 import org.mcsg.bot.util.MapWrapper;
-import org.mcsg.bot.util.Point;
 
 public class Dots extends AbstractPainter {
 
@@ -21,13 +21,13 @@ public class Dots extends AbstractPainter {
 		int y = rand.nextInt(height);
 		int amt = rand.nextInt(50000);
 		int size = 12;
-		Point lpoint = new Point(x, y);
+		Vec2 lpoint = new Vec2(x, y);
 
 		Color color = getRandomColor(false);
 
 		for (int d = 0; d < amt; d++) {
 
-			Point p = new Point(lpoint);
+			Vec2 p = new Vec2(lpoint);
 			while (p.distance(lpoint) < size + 1) {
 				p.incX(rand.nextInt(3) - 1);
 				p.incY(rand.nextInt(3) - 1);
