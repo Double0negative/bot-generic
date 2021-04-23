@@ -173,7 +173,7 @@ public class ImagePainterCommand implements BotCommand {
 			generateVideo(chat, folder, img, width, height, future);
 		}
 
-		frame(img);
+		//frame(img);
 
 		final MapWrapper wrap = new MapWrapper();
 		for (String arg : args) {
