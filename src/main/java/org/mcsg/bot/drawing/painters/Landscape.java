@@ -73,7 +73,7 @@ public class Landscape extends AbstractPainter {
 		int diff = top - bottom;
 
 		double noise [][] = ImageTools.createNoise(diff, diff, width,(int)(diff * args.getDouble("mntscale", 1)), (int)(diff * args.getDouble("mntscale", 1)),args.getDouble("mntpersist", .4));
-		Color c = Color.decode(args.getOrDefault("landcolor", "#fff"));
+		Color c = Color.decode(args.getOrDefault("landcolor", "#ffffff"));
 
 		for(int a = 0;  a < diff ; a += diff / args.getDouble("divisor", diff / 2)) {
 			int []y = new int [width + 4];
