@@ -28,23 +28,23 @@ public class Landscape extends AbstractPainter {
 		mid = 500;
 		System.out.println("mid " + mid);
 		
-		paintMnts(height,0 , args);
-		paintFlat(mid, 0, args);
+		paintMnts(height * .25,height *1.7 , args);
+	    //paintFlat(mid, 0, args);
 
 
 	}
 
 	public void paintFlat(int top, int bottom, MapWrapper args) {
 		int diff = top - bottom;
-		double noise [][] = ImageTools.createNoise(diff, diff, width,(int)(diff * args.getDouble("flatscale", 1)), (int)(diff * args.getDouble("flatscale", 1)),args.getDouble("flatpersist", .1));
+		double noise [][] = ImageTools.createNoise(height, width, height,(int)(width * args.getDouble("flatscale", 1)), (int)(diff * args.getDouble("flatscale", 1)),args.getDouble("flatpersist", .1));
 
-		for(int a = 0;  a < diff; a += diff / args.getDouble("divisor", 200)) {
+		for(double a = top;  a < bottom; a += diff / args.getDouble("divisor", 200)) {
 			int []y = new int [width + 4];
 			int []x = new int [width + 4];
 
 			for(int i = 0;  i < width; i++) {
 				x[i] = i;
-				y[i] = height - (((int) (noise[a][i] * diff)) - (a / diff * bottom) - top);
+				y[i] = (int)  (a +  (noise[i][(int) a] * diff)) ;
 			}
 			int i = width;
 
@@ -69,19 +69,19 @@ public class Landscape extends AbstractPainter {
 
 
 
-	public void paintMnts(int top, int bottom, MapWrapper args) {
-		int diff = top - bottom;
+	public void paintMnts(double top, double bottom, MapWrapper args) {
+		int diff = (int) (bottom - top);
 
-		double noise [][] = ImageTools.createNoise(diff, diff, width,(int)(diff * args.getDouble("mntscale", 1)), (int)(diff * args.getDouble("mntscale", 1)),args.getDouble("mntpersist", .4));
+		double noise [][] = ImageTools.createNoise(diff, width, diff,(int)(width * args.getDouble("mntscale", 1)), (int)(diff * args.getDouble("mntscale", 1)),args.getDouble("mntpersist", .4));
 		Color c = Color.decode(args.getOrDefault("landcolor", "#ffffff"));
 
-		for(int a = 0;  a < diff ; a += diff / args.getDouble("divisor", diff / 2)) {
+		for(double a = top;  a < bottom ; a += diff / args.getDouble("divisor", diff / 2)) {
 			int []y = new int [width + 4];
 			int []x = new int [width + 4];
 
 			for(int i = 0;  i < width; i++) {
 				x[i] = i;
-				y[i] = (height - (diff - a)) - (int) (noise[a][i] * diff) ;
+				y[i] =  (int) (a -  (noise[i][(int) ((int) a - top)] * (.7 *diff))) ;
 			}
 			int i = width;
 
@@ -90,11 +90,11 @@ public class Landscape extends AbstractPainter {
 
 			i++;
 			y[i] = height;
-			x[i] = 0;
+			x[i] = -1;
 
 			i++;
 			y[i] = y[0];
-			x[i] = 0;
+			x[i] = -1;
 
 			g.setColor(Color.black);
 			g.drawPolygon(x, y, i);
