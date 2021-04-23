@@ -18,7 +18,7 @@ public class Sunset extends AbstractPainter{
 
 	@Override
 	public void paint(MapWrapper args) {
-		boolean storm = rand.nextBoolean();
+		boolean storm = false; //rand.nextBoolean();
 		drawBackground();
 		drawSun();
 		
@@ -28,13 +28,11 @@ public class Sunset extends AbstractPainter{
 			drawClouds();
 		drawOcean2(storm);
 		drawReflection();
-
 	}
 
 
 
 	private void drawBackground() {
-		
 		for(int y = 0; y < 300; y++) {
 			int col = rand.nextInt(100) + 150;
 			Color color = new Color (col, col, 255, 10);
@@ -80,7 +78,6 @@ public class Sunset extends AbstractPainter{
 	public void drawClouds() {
 		int count = rand.nextInt(12);
 
-
 		int size = 100;
 
 		for(int a = 0; a < count; a ++) {
@@ -114,7 +111,6 @@ public class Sunset extends AbstractPainter{
 
 
 					g.fillOval(cx + posx  + offx - (s /2), cy + posy + offy - (s /2 ),s, s );
-
 				}
 			}
 		}
@@ -153,8 +149,10 @@ public class Sunset extends AbstractPainter{
 				g.fillPolygon(new int [] {b,  b + inv,  b + inv, b}, new int[] {a + lastOffset1,a + offset1, a + offset2 + size, a + lastOffset2 + size}, 4);
 				lastOffset1 = offset1;				
 				lastOffset2 = offset2;
-
+				
+			
 			}
+			
 		}
 	}
 
@@ -201,7 +199,6 @@ public class Sunset extends AbstractPainter{
  			}
 			
 			g.fillPolygon(x, y, x.length);
-
 		}
 	}
 

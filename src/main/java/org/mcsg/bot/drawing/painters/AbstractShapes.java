@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import org.mcsg.bot.drawing.AbstractPainter;
 import org.mcsg.bot.drawing.ImageTools;
-import org.mcsg.bot.drawing.Vec2;
+import org.mcsg.bot.drawing.Point;
 import org.mcsg.bot.util.MapWrapper;
 
 public class AbstractShapes extends AbstractPainter{
@@ -17,7 +17,7 @@ public class AbstractShapes extends AbstractPainter{
 	public void paint(MapWrapper args) {
 		int stop = args.getInt("amount", rand.nextInt(5000));
 
-		Vec2 point = new Vec2(rand.nextInt(width), rand.nextInt(height));
+		Point point = new Point(rand.nextInt(width), rand.nextInt(height));
 		setRandomColor(true);
 		g.setColor(new Color(255,170,0,50));
 		for(int a = 0; a < stop; a++){
@@ -36,7 +36,7 @@ public class AbstractShapes extends AbstractPainter{
 
 
 
-	private Vec2 drawRandomShape(Vec2 point){
+	private Point drawRandomShape(Point point){
 		int size = 3;
 //		while(rand.nextInt(10) > 2)
 //			size++;
@@ -54,7 +54,7 @@ public class AbstractShapes extends AbstractPainter{
 
 		g.fillPolygon(xcor, ycor, size);
 
-		return new Vec2(lx, ly);
+		return new Point(lx, ly);
 
 	}
 

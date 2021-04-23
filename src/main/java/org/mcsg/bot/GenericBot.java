@@ -40,7 +40,7 @@ public abstract class GenericBot implements Bot{
 
 	@Override
 	public String getVersion() {
-		return "0.0.1";
+		return "1.4.0";
 	}
 
 }

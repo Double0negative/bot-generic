@@ -1,14 +1,14 @@
 package org.mcsg.bot.drawing;
 
-public class Vec2 {
+public class Point {
 
 	public int x,y;
 
-	public Vec2(Vec2 point){
+	public Point(Point point){
 		this(point.getX(), point.getY());
 	}
 	
-	public Vec2(int x, int y) {
+	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -56,7 +56,7 @@ public class Vec2 {
 		return (int) Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
 	}
 	
-	public int distance(Vec2 pnt){
+	public int distance(Point pnt){
 		return distance(pnt.getX(), pnt.getY());
 	}
 	

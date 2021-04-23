@@ -40,6 +40,7 @@ import org.mcsg.bot.drawing.filter.Pixelate;
 import org.mcsg.bot.drawing.filter.ScanLines;
 import org.mcsg.bot.drawing.filter.Smoosh;
 import org.mcsg.bot.drawing.painters.AbstractShapes;
+import org.mcsg.bot.drawing.painters.BallPhysics;
 import org.mcsg.bot.drawing.painters.Circles;
 import org.mcsg.bot.drawing.painters.Clusters;
 import org.mcsg.bot.drawing.painters.Curves;
@@ -50,6 +51,7 @@ import org.mcsg.bot.drawing.painters.Fireworks;
 import org.mcsg.bot.drawing.painters.Landscape;
 import org.mcsg.bot.drawing.painters.Lines;
 import org.mcsg.bot.drawing.painters.Linked;
+import org.mcsg.bot.drawing.painters.ShaderTest;
 import org.mcsg.bot.drawing.painters.BasicShapes;
 import org.mcsg.bot.drawing.painters.Smoke;
 import org.mcsg.bot.drawing.painters.Smudge;
@@ -86,7 +88,10 @@ public class ImagePainterCommand implements BotCommand {
 //		ImagePainterCommand.painters.put("time", Time.class);
 		ImagePainterCommand.painters.put("linked", Linked.class);
 		ImagePainterCommand.painters.put("spooky", Spooky.class);
+		ImagePainterCommand.painters.put("shadertest", ShaderTest.class);
+		ImagePainterCommand.painters.put("ball", BallPhysics.class);
 
+		
 		ImagePainterCommand.painters.put("empty", Empty.class);
 
 		ImagePainterCommand.filters.put("pixel", Pixelate.class);
@@ -168,7 +173,7 @@ public class ImagePainterCommand implements BotCommand {
 			generateVideo(chat, folder, img, width, height, future);
 		}
 
-//		frame(img);
+		frame(img);
 
 		final MapWrapper wrap = new MapWrapper();
 		for (String arg : args) {

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import org.mcsg.bot.drawing.AbstractPainter;
 import org.mcsg.bot.drawing.ImageTools;
-import org.mcsg.bot.drawing.Vec2;
+import org.mcsg.bot.drawing.Point;
 import org.mcsg.bot.util.MapWrapper;
 
 public class Smudge extends AbstractPainter{
@@ -21,14 +21,14 @@ public class Smudge extends AbstractPainter{
 		int y = rand.nextInt(height);
 		int amt = rand.nextInt(50000);
 		int size = 100;
-		Vec2 lpoint = new Vec2(x, y);
+		Point lpoint = new Point(x, y);
 
 		Color color = getRandomColor(false);
 
 
 		for(int d = 0; d < amt; d++){
 
-			Vec2 p = new Vec2(lpoint);
+			Point p = new Point(lpoint);
 //			while(p.distance(lpoint) < size + 1){
 //				p.incX(rand.nextInt(3) - 1);
 //				p.incY(rand.nextInt(3) - 1);

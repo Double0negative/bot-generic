@@ -6,7 +6,7 @@
 
 	<groupId>org.mcsg</groupId>
 	<artifactId>bot-generic</artifactId>
-	<version>1.2.0</version>
+	<version>1.4.0</version>
 	<packaging>jar</packaging>
 
 	<name>bot-generic</name>

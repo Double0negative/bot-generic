@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.mcsg.bot.drawing.Filter;
 import org.mcsg.bot.drawing.PixelData;
-import org.mcsg.bot.drawing.Vec2;
+import org.mcsg.bot.drawing.Point;
 import org.mcsg.bot.util.MapWrapper;
 
 public class Pixelate implements Filter{
