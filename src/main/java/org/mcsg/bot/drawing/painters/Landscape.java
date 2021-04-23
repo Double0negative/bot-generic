@@ -37,7 +37,7 @@ public class Landscape extends AbstractPainter {
 	public void paintFlat(int top, int bottom, MapWrapper args) {
 		int diff = top - bottom;
 		double noise [][] = ImageTools.createNoise(diff, diff, width,(int)(diff * args.getDouble("flatscale", 1)), (int)(diff * args.getDouble("flatscale", 1)),args.getDouble("flatpersist", .1));
-		
+
 		for(int a = 0;  a < diff; a += diff / args.getDouble("divisor", 200)) {
 			int []y = new int [width + 4];
 			int []x = new int [width + 4];
@@ -58,9 +58,10 @@ public class Landscape extends AbstractPainter {
 			i++;
 			y[i] = y[0];
 			x[i] = 0;
-
+			
 			g.setColor(Color.black);
 			g.drawPolygon(x, y, i);
+			
 			g.setColor(Color.white);
 			g.drawPolygon(x, y, i);
 		}
@@ -72,6 +73,7 @@ public class Landscape extends AbstractPainter {
 		int diff = top - bottom;
 
 		double noise [][] = ImageTools.createNoise(diff, diff, width,(int)(diff * args.getDouble("mntscale", 1)), (int)(diff * args.getDouble("mntscale", 1)),args.getDouble("mntpersist", .4));
+		Color c = Color.decode(args.getOrDefault("landcolor", "#fff"));
 
 		for(int a = 0;  a < diff ; a += diff / args.getDouble("divisor", diff / 2)) {
 			int []y = new int [width + 4];
@@ -96,7 +98,8 @@ public class Landscape extends AbstractPainter {
 
 			g.setColor(Color.black);
 			g.drawPolygon(x, y, i);
-			g.setColor(Color.white);
+			
+			g.setColor(c);
 			g.drawPolygon(x, y, i);
 		}
 	}
